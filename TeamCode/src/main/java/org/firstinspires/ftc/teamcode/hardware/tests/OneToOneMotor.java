@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.tests;
+package org.firstinspires.ftc.teamcode.hardware.tests;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -38,7 +38,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 
-@Disabled
+//@Disabled
 @TeleOp(name = "Test: 1 to 1 Motor", group = "HardwareTest")
 public class OneToOneMotor extends OpMode {
 
