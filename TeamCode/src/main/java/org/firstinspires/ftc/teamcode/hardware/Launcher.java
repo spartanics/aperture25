@@ -50,9 +50,9 @@ public class Launcher {
         }
 
         if (myOpMode.gamepad2.a) {
-            curvePos = 1.0;
+            curvePos += 0.1;
         } else if (myOpMode.gamepad2.b) {
-            curvePos = 0.0;
+            curvePos -= 0.1;
         }
 
         left_launch.setPower(leftPower);

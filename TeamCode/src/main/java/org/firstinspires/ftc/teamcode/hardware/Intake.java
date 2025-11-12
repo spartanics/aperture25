@@ -45,7 +45,7 @@ public class Intake {
 
         left_motor.setPower(power);
         right_motor.setPower(power);
-        helper.setPower(power);
+        helper.setPower(-power);
     }
 
     public void sendTelemetry() {

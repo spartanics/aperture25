@@ -48,11 +48,11 @@ public class Chamber {
 
         power = -myOpMode.gamepad2.right_stick_y;
         if (myOpMode.gamepad2.y && swapCD.seconds() > 0.1 && swapDirection) {
-            swap.setPosition(1);
+            swap.setPosition(0);
             swapDirection = !swapDirection;
             swapCD.reset();
         } else if (myOpMode.gamepad2.y && swapCD.seconds() > 0.1 && !swapDirection) {
-            swap.setPosition(0);
+            swap.setPosition(1);
             swapDirection = !swapDirection;
             swapCD.reset();
         }
