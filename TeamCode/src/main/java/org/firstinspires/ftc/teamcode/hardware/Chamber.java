@@ -1,5 +1,9 @@
 package org.firstinspires.ftc.teamcode.hardware;
 
+import androidx.annotation.NonNull;
+
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -77,5 +81,31 @@ public class Chamber {
         myOpMode.telemetry.addData("Lift Power", "%.2f", power);
         myOpMode.telemetry.addData("Swap Direction", swapDirection);
         myOpMode.telemetry.addLine();
+    }
+
+    public class AutonChamberUp implements Action {
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            swap.setPosition(1);
+            return false;
+        }
+    }
+
+    public Action autoChamberUp() {
+        return new Chamber.AutonChamberUp();
+    }
+
+    public class AutonChamberDown implements Action {
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            swap.setPosition(0);
+            return false;
+        }
+    }
+
+    public Action autoChamberDown() {
+        return new Chamber.AutonChamberDown();
     }
 }
