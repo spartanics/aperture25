@@ -1,4 +1,6 @@
 package org.firstinspires.ftc.teamcode.opmodes;
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.PoseVelocity2d;
 import com.acmerobotics.roadrunner.Vector2d;
@@ -18,7 +20,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 // I AM DOCTOR IVO ROBOTNIK! >:D
 @TeleOp(name = "Headless", group = "OpModes")
 public class Headless extends OpMode {
-
 
     // Insert whatever initialization your own code does
     private Intake intake = new Intake(this);
@@ -61,7 +62,7 @@ public class Headless extends OpMode {
         chamber.init();
         launcher.init();
 
-        drive = new MecanumDrive(hardwareMap, new Pose2d(0, 0, 0));
+        drive = new MecanumDrive(hardwareMap, new Pose2d(60, 60, Math.toRadians(270)));
         headlessHeading = 0;
 
         pressed_a = false;
@@ -119,6 +120,8 @@ public class Headless extends OpMode {
             }
 
         }
+
+        launcher.sendPose(drive.localizer.getPose());
 
         intake.listen();
         chamber.listen();

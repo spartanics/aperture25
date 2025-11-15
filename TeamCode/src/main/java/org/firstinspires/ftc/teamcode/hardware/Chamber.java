@@ -15,10 +15,13 @@ public class Chamber {
 
     private ElapsedTime swapCD = new ElapsedTime();
 
+    private ElapsedTime dropCD = new ElapsedTime();
+
     private CRServo left_lift;
     private CRServo right_lift;
 
     private Servo swap;
+    private CRServo drop;
 
     public Chamber(OpMode opmode) { myOpMode = opmode; }
 
@@ -32,6 +35,7 @@ public class Chamber {
         right_lift.setDirection(DcMotorSimple.Direction.REVERSE);
 
         swap = myOpMode.hardwareMap.get(Servo.class, "swap");
+        drop = myOpMode.hardwareMap.get(CRServo.class, "drop");
     }
 
     public void listen() {
@@ -47,18 +51,25 @@ public class Chamber {
 //        }
 
         power = -myOpMode.gamepad2.right_stick_y;
-        if (myOpMode.gamepad2.y && swapCD.seconds() > 0.1 && swapDirection) {
+        if (myOpMode.gamepad2.y && swapCD.seconds() > 0.2 && swapDirection) {
             swap.setPosition(0);
             swapDirection = !swapDirection;
             swapCD.reset();
-        } else if (myOpMode.gamepad2.y && swapCD.seconds() > 0.1 && !swapDirection) {
+        } else if (myOpMode.gamepad2.y && swapCD.seconds() > 0.2 && !swapDirection) {
             swap.setPosition(1);
             swapDirection = !swapDirection;
             swapCD.reset();
         }
-
         left_lift.setPower(power);
         right_lift.setPower(power);
+
+        if (myOpMode.gamepad2.b) {
+            drop.setPower(1);
+        } else if (myOpMode.gamepad2.a) {
+            drop.setPower(-1);
+        } else {
+            drop.setPower(0);
+        }
     }
 
     public void sendTelemetry() {

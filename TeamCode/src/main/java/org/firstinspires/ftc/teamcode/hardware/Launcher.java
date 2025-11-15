@@ -1,5 +1,11 @@
 package org.firstinspires.ftc.teamcode.hardware;
 
+import android.drm.DrmStore;
+
+import com.acmerobotics.roadrunner.Pose2d;
+import com.acmerobotics.roadrunner.Rotation2d;
+import com.acmerobotics.roadrunner.Vector2d;
+import com.arcrobotics.ftclib.kotlin.extensions.geometry.Vector2dExtKt;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -12,17 +18,20 @@ public class Launcher {
 
     private OpMode myOpMode;
 
-    double rightPower = 0.0;
+    private Pose2d pose;
+
+    private double ddistance;
+
+    private double adjusted_power;
+
     double leftPower = 0.0;
 
-    double curvePos = 0.0;
+    double rightPower = 0.0;
 
     private ElapsedTime swapCD = new ElapsedTime();
 
     private DcMotorEx left_launch;
     private DcMotorEx right_launch;
-
-    private Servo curve;
 
     public Launcher(OpMode opmode) { myOpMode = opmode; }
 
@@ -32,40 +41,47 @@ public class Launcher {
 
         left_launch.setDirection(DcMotorSimple.Direction.FORWARD);
         right_launch.setDirection(DcMotorSimple.Direction.REVERSE);
+    }
 
-        curve = myOpMode.hardwareMap.get(Servo.class, "curve");
+    public void sendPose(Pose2d currPose) {
+        pose = currPose;
     }
 
     public void listen() {
+        double dx = pose.position.x - (-51.3);
+        double dy = pose.position.y - (52.3);
+
+        ddistance = (Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2)));
+
+//        adjusted_power = -0.897519 + 0.350997 * Math.log(ddistance);
+
+        if (myOpMode.gamepad1.right_trigger > 0.2) {
+            adjusted_power = 0.67;
+        } else if (myOpMode.gamepad1.left_trigger > 0.2) {
+            adjusted_power = 0.8;
+        }
+
         if (myOpMode.gamepad2.right_bumper) {
-            rightPower = 1.0;
+            rightPower = adjusted_power;
         } else {
             rightPower = 0.0;
         }
 
         if (myOpMode.gamepad2.left_bumper) {
-            leftPower = 1.0;
+            leftPower = adjusted_power;
         } else {
             leftPower = 0.0;
-        }
-
-        if (myOpMode.gamepad2.a) {
-            curvePos += 0.1;
-        } else if (myOpMode.gamepad2.b) {
-            curvePos -= 0.1;
         }
 
         left_launch.setPower(leftPower);
         right_launch.setPower(rightPower);
 
-        curve.setPosition(curvePos);
     }
 
     public void sendTelemetry() {
         myOpMode.telemetry.addLine("----LAUNCHER----");
-        myOpMode.telemetry.addData("Right Power", "%.2f", rightPower);
-        myOpMode.telemetry.addData("Left Power", "%.2f", leftPower);
-        myOpMode.telemetry.addData("Curve Position", curvePos);
+        myOpMode.telemetry.addData("Power", "%.2f", adjusted_power);
+        myOpMode.telemetry.addData("Delta Distance", "%.2f", ddistance);
         myOpMode.telemetry.addLine();
     }
 }
