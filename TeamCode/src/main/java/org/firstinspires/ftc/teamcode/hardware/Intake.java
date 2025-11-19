@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.hardware;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 public class Intake {
 
@@ -22,6 +23,7 @@ public class Intake {
     public void init() {
         left_motor = myOpMode.hardwareMap.get(DcMotorEx.class, "intakeLeft");
         right_motor = myOpMode.hardwareMap.get(DcMotorEx.class, "intakeRight");
+        right_motor.setDirection(DcMotorSimple.Direction.REVERSE);
 
         helper = myOpMode.hardwareMap.get(CRServo.class, "intakeHelper");
     }

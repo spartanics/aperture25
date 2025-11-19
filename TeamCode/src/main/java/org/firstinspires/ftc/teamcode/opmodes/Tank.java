@@ -87,6 +87,8 @@ public class Tank extends OpMode {
             speed -= 0.25;
         }
 
+        launcher.sendPose(drive.localizer.getPose());
+
         intake.listen();
         chamber.listen();
         launcher.listen();

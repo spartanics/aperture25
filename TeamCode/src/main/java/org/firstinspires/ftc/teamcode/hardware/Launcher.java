@@ -2,6 +2,10 @@ package org.firstinspires.ftc.teamcode.hardware;
 
 import android.drm.DrmStore;
 
+import androidx.annotation.NonNull;
+
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.Rotation2d;
 import com.acmerobotics.roadrunner.Vector2d;
@@ -56,9 +60,11 @@ public class Launcher {
 //        adjusted_power = -0.897519 + 0.350997 * Math.log(ddistance);
 
         if (myOpMode.gamepad1.right_trigger > 0.2) {
-            adjusted_power = 0.67;
+            adjusted_power = 0.5;
         } else if (myOpMode.gamepad1.left_trigger > 0.2) {
-            adjusted_power = 0.8;
+            adjusted_power = 0.6;
+        } else {
+            adjusted_power = 0.7;
         }
 
         if (myOpMode.gamepad2.right_bumper) {
@@ -83,5 +89,47 @@ public class Launcher {
         myOpMode.telemetry.addData("Power", "%.2f", adjusted_power);
         myOpMode.telemetry.addData("Delta Distance", "%.2f", ddistance);
         myOpMode.telemetry.addLine();
+    }
+
+    public class AutonListen implements  Action {
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            left_launch.setPower(leftPower);
+            right_launch.setPower(rightPower);
+            return true;
+        }
+    }
+
+    public Action autonListen() {
+        return new Launcher.AutonListen();
+    }
+
+    public class AutonSpinUp implements Action {
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            leftPower = 0.8;
+            rightPower = 0.8;
+            return false;
+        }
+    }
+
+    public Action autonSpinUp() {
+        return new Launcher.AutonSpinUp();
+    }
+
+    public class AutonSpinDown implements Action {
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            leftPower = 0;
+            rightPower = 0;
+            return false;
+        }
+    }
+
+    public Action autonSpinDown() {
+        return new Launcher.AutonSpinDown();
     }
 }

@@ -10,14 +10,13 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.MecanumDrive;
-
 import org.firstinspires.ftc.teamcode.hardware.Chamber;
 import org.firstinspires.ftc.teamcode.hardware.Launcher;
 
 
 @Config
-@Autonomous(name = "Auto Blue Base", group = "Autonomous")
-public class autoBlueBase extends LinearOpMode {
+@Autonomous(name = "Auto Red Base", group = "Autonomous")
+public class autoRedBase extends LinearOpMode {
     Pose2d startPose;
     MecanumDrive drive;
 
@@ -28,13 +27,13 @@ public class autoBlueBase extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        startPose = new Pose2d(60, -11, Math.toRadians(-155));
+        startPose = new Pose2d(60, 11, Math.toRadians(155));
         drive = new MecanumDrive(hardwareMap, startPose);
         TrajectoryActionBuilder build = drive.actionBuilder(startPose)
                 //.afterTime(3, launcher.autonSpinUp())
                 //.afterTime(2, chamber.autoChamberUp())
                 //.afterTime(3, launcher.autonSpinDown())
-                .splineToLinearHeading(new Pose2d(new Vector2d(12, -25), Math.toRadians(270)), Math.toRadians(230))
+                .splineToLinearHeading(new Pose2d(new Vector2d(12, 25), Math.toRadians(-270)), Math.toRadians(-230))
                 //.afterTime(2, chamber.autoChamberDown())
                 ;
 //        TrajectoryActionBuilder flipped = new TrajectoryActionBuilder(build,

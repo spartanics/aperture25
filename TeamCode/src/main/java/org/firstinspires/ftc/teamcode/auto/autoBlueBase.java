@@ -1,16 +1,9 @@
 package org.firstinspires.ftc.teamcode.auto;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.acmerobotics.roadrunner.InstantAction;
-import com.acmerobotics.roadrunner.InstantFunction;
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
-import com.acmerobotics.roadrunner.Pose2dDual;
-import com.acmerobotics.roadrunner.ProfileParams;
-import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
-import com.acmerobotics.roadrunner.TrajectoryBuilder;
-import com.acmerobotics.roadrunner.TrajectoryBuilderParams;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -20,14 +13,11 @@ import org.firstinspires.ftc.teamcode.MecanumDrive;
 
 import org.firstinspires.ftc.teamcode.hardware.Chamber;
 import org.firstinspires.ftc.teamcode.hardware.Launcher;
-import org.slf4j.MarkerFactory;
-
-import java.util.List;
 
 
 @Config
-@Autonomous(name = "Auto Base", group = "Autonomous")
-public class autoBase extends LinearOpMode {
+@Autonomous(name = "Auto Blue Base", group = "Autonomous")
+public class autoBlueBase extends LinearOpMode {
     Pose2d startPose;
     MecanumDrive drive;
 
@@ -41,11 +31,11 @@ public class autoBase extends LinearOpMode {
         startPose = new Pose2d(60, -11, Math.toRadians(-155));
         drive = new MecanumDrive(hardwareMap, startPose);
         TrajectoryActionBuilder build = drive.actionBuilder(startPose)
-                //.afterTime(3, launcher.autonSpinUp())
-                //.afterTime(2, chamber.autoChamberUp())
-                //.afterTime(3, launcher.autonSpinDown())
-                .splineToLinearHeading(new Pose2d(new Vector2d(18, -25), Math.toRadians(270)), Math.toRadians(230))
-                //.afterTime(2, chamber.autoChamberDown())
+                .afterTime(3, launcher.autonSpinUp())
+                .afterTime(2, chamber.autoChamberUp())
+                .afterTime(3, launcher.autonSpinDown())
+                .splineToLinearHeading(new Pose2d(new Vector2d(12, -25), Math.toRadians(270)), Math.toRadians(230))
+                .afterTime(2, chamber.autoChamberDown())
                 ;
 //        TrajectoryActionBuilder flipped = new TrajectoryActionBuilder(build,
 //                new TrajectoryBuilderParams(pose -> new Pose2dDual<>(

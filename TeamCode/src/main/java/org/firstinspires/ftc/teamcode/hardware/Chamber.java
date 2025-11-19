@@ -87,7 +87,8 @@ public class Chamber {
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            swap.setPosition(1);
+            left_lift.setPower(1);
+            right_lift.setPower(1);
             return false;
         }
     }
@@ -100,7 +101,8 @@ public class Chamber {
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            swap.setPosition(0);
+            left_lift.setPower(0);
+            right_lift.setPower(0);
             return false;
         }
     }
