@@ -1,13 +1,12 @@
 package com.example.meepmeep;
 
 import com.acmerobotics.roadrunner.Pose2d;
-import com.acmerobotics.roadrunner.Rotation2d;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.noahbres.meepmeep.MeepMeep;
 import com.noahbres.meepmeep.roadrunner.DefaultBotBuilder;
 import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 
-public class MeepMeepExample {
+public class MeepMeepFinal {
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(800);
 
