@@ -13,19 +13,14 @@ public class Intake {
     double right_trigger;
     double power;
 
-    private DcMotorEx left_motor;
-    private DcMotorEx right_motor;
+    private DcMotorEx intake;
 
     private CRServo helper;
 
     public Intake(OpMode opmode) { myOpMode = opmode; }
 
     public void init() {
-        left_motor = myOpMode.hardwareMap.get(DcMotorEx.class, "intakeLeft");
-        right_motor = myOpMode.hardwareMap.get(DcMotorEx.class, "intakeRight");
-        right_motor.setDirection(DcMotorSimple.Direction.REVERSE);
-
-        helper = myOpMode.hardwareMap.get(CRServo.class, "intakeHelper");
+        intake = myOpMode.hardwareMap.get(DcMotorEx.class, "intake");
     }
 
     public void listen() {
@@ -45,9 +40,7 @@ public class Intake {
 
         power = -left_trigger + right_trigger;
 
-        left_motor.setPower(power);
-        right_motor.setPower(power);
-        helper.setPower(-power);
+        intake.setPower(power);
     }
 
     public void sendTelemetry() {

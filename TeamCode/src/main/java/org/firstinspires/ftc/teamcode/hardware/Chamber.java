@@ -19,27 +19,24 @@ public class Chamber {
 
     private ElapsedTime swapCD = new ElapsedTime();
 
-    private ElapsedTime dropCD = new ElapsedTime();
+    private DcMotorEx spindex;
 
-    private CRServo left_lift;
-    private CRServo right_lift;
-
-    private Servo swap;
-    private CRServo drop;
+    private Servo spin1;
+    private Servo spin2;
+    private Servo spin3;
 
     public Chamber(OpMode opmode) { myOpMode = opmode; }
 
     boolean swapDirection = false;
 
     public void init() {
-        left_lift = myOpMode.hardwareMap.get(CRServo.class, "liftLeft");
-        right_lift = myOpMode.hardwareMap.get(CRServo.class, "liftRight");
+        spindex = myOpMode.hardwareMap.get(DcMotorEx.class, "spindexer");
 
-        left_lift.setDirection(DcMotorSimple.Direction.FORWARD);
-        right_lift.setDirection(DcMotorSimple.Direction.REVERSE);
+        spin1 = myOpMode.hardwareMap.get(Servo.class, "spin1");
 
-        swap = myOpMode.hardwareMap.get(Servo.class, "swap");
-        drop = myOpMode.hardwareMap.get(CRServo.class, "drop");
+
+        spin2 = myOpMode.hardwareMap.get(Servo.class, "spin2");
+        spin3 = myOpMode.hardwareMap.get(Servo.class, "spin3");
     }
 
     public void listen() {

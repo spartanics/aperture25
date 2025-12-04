@@ -22,36 +22,23 @@ public class Launcher {
 
     private OpMode myOpMode;
 
-    private Pose2d pose;
-
     private double ddistance;
 
     private double adjusted_power;
 
-    double leftPower = 0.0;
+    double power = 0.0;
 
-    double rightPower = 0.0;
-
-    private ElapsedTime swapCD = new ElapsedTime();
-
-    private DcMotorEx left_launch;
-    private DcMotorEx right_launch;
+    private DcMotorEx flywheel;
 
     public Launcher(OpMode opmode) { myOpMode = opmode; }
 
     public void init() {
-        left_launch = myOpMode.hardwareMap.get(DcMotorEx.class, "launchLeft");
-        right_launch = myOpMode.hardwareMap.get(DcMotorEx.class, "launchRight");
+        flywheel = myOpMode.hardwareMap.get(DcMotorEx.class, "flywheel");
 
-        left_launch.setDirection(DcMotorSimple.Direction.FORWARD);
-        right_launch.setDirection(DcMotorSimple.Direction.REVERSE);
+        flywheel.setDirection(DcMotorSimple.Direction.FORWARD);
     }
 
-    public void sendPose(Pose2d currPose) {
-        pose = currPose;
-    }
-
-    public void listen() {
+    public void listen(Pose2d pose) {
         double dx = pose.position.x - (-51.3);
         double dy = pose.position.y - (52.3);
 
@@ -68,20 +55,12 @@ public class Launcher {
         }
 
         if (myOpMode.gamepad2.right_bumper) {
-            rightPower = adjusted_power;
+            power = adjusted_power;
         } else {
-            rightPower = 0.0;
+            power = 0.0;
         }
 
-        if (myOpMode.gamepad2.left_bumper) {
-            leftPower = adjusted_power;
-        } else {
-            leftPower = 0.0;
-        }
-
-        left_launch.setPower(leftPower);
-        right_launch.setPower(rightPower);
-
+        flywheel.setPower(power);
     }
 
     public void sendTelemetry() {
