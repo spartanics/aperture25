@@ -24,7 +24,8 @@ public class MeepMeepFinal {
                         .turnTo(500)
                         .waitSeconds(5)
                         //.splineToLinearHeading(new Pose2d(new Vector2d(10, -20), Math.toRadians(180)), Math.toRadians(135))
-                        .splineTo(new Pose2d(new Vector2d(10, -30), Math.toRadians(0)).component1(), Math.toRadians(0))
+                        .splineTo(new Pose2d(new Vector2d(10, -26), Math.toRadians(0)).component1(), Math.toRadians(0))
+                        .turnTo(300)
                 .build());
 
         meepMeep.setBackground(MeepMeep.Background.FIELD_DECODE_JUICE_DARK)

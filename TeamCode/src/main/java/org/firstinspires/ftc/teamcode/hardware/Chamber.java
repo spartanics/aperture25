@@ -13,6 +13,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class Chamber {
 
+
     private OpMode myOpMode;
 
     double power = 0;
@@ -21,62 +22,53 @@ public class Chamber {
 
     private DcMotorEx spindex;
 
+
     private Servo spin1;
     private Servo spin2;
     private Servo spin3;
 
+    //double flap1 = 0.0;
+
     public Chamber(OpMode opmode) { myOpMode = opmode; }
 
-    boolean swapDirection = false;
 
     public void init() {
         spindex = myOpMode.hardwareMap.get(DcMotorEx.class, "spindexer");
 
+        //spindex.setDirection(DcMotorSimple.Direction.FORWARD);
         spin1 = myOpMode.hardwareMap.get(Servo.class, "spin1");
 
 
         spin2 = myOpMode.hardwareMap.get(Servo.class, "spin2");
         spin3 = myOpMode.hardwareMap.get(Servo.class, "spin3");
+
+
     }
 
     public void listen() {
-//        if (myOpMode.gamepad2.left_bumper) {
-//            left_bumper = 1.0;
-//        } else {
-//            left_bumper = 0.0;
-//        }
-//        if (myOpMode.gamepad2.right_bumper) {
-//            right_bumper = 1.0;
-//        } else {
-//            right_bumper = 0.0;
-//        }
 
-        power = -myOpMode.gamepad2.right_stick_y;
-        if (myOpMode.gamepad2.y && swapCD.seconds() > 0.2 && swapDirection) {
-            swap.setPosition(0);
-            swapDirection = !swapDirection;
-            swapCD.reset();
-        } else if (myOpMode.gamepad2.y && swapCD.seconds() > 0.2 && !swapDirection) {
-            swap.setPosition(1);
-            swapDirection = !swapDirection;
-            swapCD.reset();
-        }
-        left_lift.setPower(power);
-        right_lift.setPower(power);
+        spin1.setPosition(0);
+        spin2.setPosition(0);
+        spin3.setPosition(0);
 
-        if (myOpMode.gamepad2.b) {
-            drop.setPower(1);
-        } else if (myOpMode.gamepad2.a) {
-            drop.setPower(-1);
-        } else {
-            drop.setPower(0);
+        if(myOpMode.gamepad2.a){
+            //flap1 = 0.9;
+            spin2.setPosition(0.7);
+        }else if (myOpMode.gamepad2.y) {
+            //flap1 = 0.1;
+            spin2.setPosition(0.0);
         }
+        //power = -myOpMode.gamepad2.right_stick_y;
+        //spindex.setPower(power);
+
+
     }
 
     public void sendTelemetry() {
         myOpMode.telemetry.addLine("----CHAMBER----");
         myOpMode.telemetry.addData("Lift Power", "%.2f", power);
-        myOpMode.telemetry.addData("Swap Direction", swapDirection);
+        //myOpMode.telemetry.addLine("----flappy----");
+        //myOpMode.telemetry.addData("Flap", "%.2f", spin1);
         myOpMode.telemetry.addLine();
     }
 
@@ -84,8 +76,8 @@ public class Chamber {
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            left_lift.setPower(1);
-            right_lift.setPower(1);
+            //left_lift.setPower(1);
+            //right_lift.setPower(1);
             return false;
         }
     }
@@ -98,8 +90,8 @@ public class Chamber {
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            left_lift.setPower(0);
-            right_lift.setPower(0);
+            //left_lift.setPower(0);
+            //right_lift.setPower(0);
             return false;
         }
     }

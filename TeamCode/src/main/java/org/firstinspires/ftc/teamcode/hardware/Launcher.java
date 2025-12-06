@@ -74,8 +74,7 @@ public class Launcher {
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            left_launch.setPower(leftPower);
-            right_launch.setPower(rightPower);
+            flywheel.setPower(power);
             return true;
         }
     }
@@ -88,8 +87,7 @@ public class Launcher {
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            leftPower = 0.8;
-            rightPower = 0.8;
+            flywheel.setPower(0.6);
             return false;
         }
     }
@@ -102,8 +100,7 @@ public class Launcher {
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            leftPower = 0;
-            rightPower = 0;
+            flywheel.setPower(0);
             return false;
         }
     }

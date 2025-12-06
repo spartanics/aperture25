@@ -15,7 +15,6 @@ public class Intake {
 
     private DcMotorEx intake;
 
-    private CRServo helper;
 
     public Intake(OpMode opmode) { myOpMode = opmode; }
 
