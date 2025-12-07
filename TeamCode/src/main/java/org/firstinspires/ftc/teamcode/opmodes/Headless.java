@@ -36,6 +36,8 @@ public class Headless extends OpMode {
     Vector2d input;
     double headlessHeading;
 
+
+
     private void gamepadToMovement() {
         float xDir = -gamepad1.left_stick_x;
         float yDir = -gamepad1.left_stick_y;
@@ -61,6 +63,7 @@ public class Headless extends OpMode {
         intake.init();
         chamber.init();
         launcher.init();
+
 
         drive = new MecanumDrive(hardwareMap, new Pose2d(60, 60, Math.toRadians(270)));
         headlessHeading = 0;
@@ -128,6 +131,7 @@ public class Headless extends OpMode {
         intake.sendTelemetry();
         chamber.sendTelemetry();
         launcher.sendTelemetry();
+
 
 
         updateTelemetry(telemetry);

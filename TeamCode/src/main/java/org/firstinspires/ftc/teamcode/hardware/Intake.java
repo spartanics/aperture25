@@ -22,6 +22,9 @@ public class Intake {
         intake = myOpMode.hardwareMap.get(DcMotorEx.class, "intake");
     }
 
+    //done done done
+    //done done done
+
     public void listen() {
 //        if (myOpMode.gamepad2.left_bumper) {
 //            left_bumper = 1.0;
