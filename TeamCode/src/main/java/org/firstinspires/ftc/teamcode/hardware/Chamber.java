@@ -2,16 +2,17 @@ package org.firstinspires.ftc.teamcode.hardware;
 
 import androidx.annotation.NonNull;
 
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.arcrobotics.ftclib.controller.PIDFController;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Chamber {
 
@@ -30,13 +31,22 @@ public class Chamber {
     private Servo spin2;
     private Servo spin3;
 
+    double originalPos;
+    double rotAmount;
+    double targetPos;
+
+    double deltaTicks = 0.0;
+    double deltaTarget = 0.0;
+
+    boolean stillOffset = false;
+
     private int spinPos;
     double target = 0;
 
     public Chamber(OpMode opmode) { myOpMode = opmode; }
 
     public double spinRadiansToTicks(double rad) {
-        return rad * (534 / (Math.PI * 2));
+        return rad * (537.6 / (Math.PI * 2));
     }
 
     public void init() {
@@ -57,29 +67,70 @@ public class Chamber {
 
     public void listen() {
 
-        if (myOpMode.gamepad2.x) {
-            target = 0;
-        } else if (myOpMode.gamepad2.a) {
-            target = 1;
-        } else if (myOpMode.gamepad2.b) {
-            target = 2;
+//        if (myOpMode.gamepad2.x) {
+//            target = 0;
+//        } else if (myOpMode.gamepad2.a) {
+//            target = 1;
+//        } else if (myOpMode.gamepad2.b) {
+//            target = 2;
+//        }
+
+        originalPos = spinRadiansToTicks((target * 2 * Math.PI) / 3);
+
+        if (myOpMode.gamepad2.x && swapCD.seconds() > 0.4) {
+            targetPos += spinRadiansToTicks((2 * Math.PI) / 3);
+
+            target++;
+            target %= 3;
+
+            swapCD.reset();
         }
 
-        spindex.setPower(spinPidf.calculate(spindex.getCurrentPosition(), spinRadiansToTicks((target * 2 * Math.PI) / 3)));
+        if (myOpMode.gamepad2.a && swapCD.seconds() > 0.4) {
+            targetPos += spinRadiansToTicks((4 * Math.PI) / 3);
 
-        if (myOpMode.gamepad2.y) {
+            target += 2;
+            target %= 3;
+
             swapCD.reset();
-            switch ((int) target) {
-                case 0:
-                    spin1.setPosition(0.5);
-                case 1:
-                    spin3.setPosition(0.5);
-                case 2:
-                    spin2.setPosition(0.5);
+        }
+
+        rotAmount = Math.floor(spindex.getCurrentPosition() / spinRadiansToTicks(2 * Math.PI));
+//
+//        if (myOpMode.gamepad2.x || myOpMode.gamepad2.a || myOpMode.gamepad2.b) {
+//            if (rotAmount != 0 ) {
+//                targetPos += originalPos;
+//            }
+//            else {
+//                targetPos = originalPos;
+//            }
+//        }
+//
+//        targetPos += myOpMode.gamepad2.right_stick_y * 5;
+
+
+        if (myOpMode.gamepad2.back) {
+            spindex.setPower(-myOpMode.gamepad2.right_stick_y / 10);
+            deltaTarget = targetPos + (spindex.getCurrentPosition() - deltaTicks);
+        } else {
+            spindex.setPower(spinPidf.calculate(spindex.getCurrentPosition(), targetPos));
+            deltaTicks = spindex.getCurrentPosition();
+            if (deltaTarget != 0) {
+                targetPos = deltaTarget;
+                deltaTarget = 0;
             }
         }
 
-        if (myOpMode.gamepad2.dpad_up) {
+        if (myOpMode.gamepad2.y) {
+            swapCD.reset();
+            if (target == 0) {
+                spin3.setPosition(0.4);
+            } else if (target == 1) {
+                spin2.setPosition(0.4);
+            } else if (target == 2) {
+                spin1.setPosition(0.4);
+            }
+        } else {
             spin1.setPosition(0);
             spin2.setPosition(0);
             spin3.setPosition(0);
@@ -94,37 +145,75 @@ public class Chamber {
 
     public void sendTelemetry() {
         myOpMode.telemetry.addLine("----CHAMBER----");
-        myOpMode.telemetry.addData("Lift Power", "%.2f", power);
+        myOpMode.telemetry.addData("Power", "%.2f", power);
         myOpMode.telemetry.addData("Spindex Position", "%d", spindex.getCurrentPosition());
-        myOpMode.telemetry.addData("Target Point", "%.2f", spinRadiansToTicks((target * 2 * Math.PI) / 3));
+//        myOpMode.telemetry.addData("Orig. Calc", "%.2f", originalPos);
+//        myOpMode.telemetry.addData("Amount Rotations", "%.2f", rotAmount);
+        myOpMode.telemetry.addData("Target Point", "%.2f", targetPos);
+        myOpMode.telemetry.addData("Target", "%.2f", target);
+        myOpMode.telemetry.addData("Delta Target", "%.2f", deltaTarget);
         myOpMode.telemetry.addLine();
     }
 
-    public class AutonChamberUp implements Action {
+
+
+    public class AutonListen implements Action {
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            //left_lift.setPower(1);
-            //right_lift.setPower(1);
+            spindex.setPower(spinPidf.calculate(spindex.getCurrentPosition(), targetPos));
+            return true;
+        }
+    }
+
+    public Action autoListen() {
+        return new Chamber.AutonListen();
+    }
+
+    public class AutonCycle implements Action {
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            if (target >= 2) {
+                target = 0;
+            } else {
+                target++;
+            }
+            targetPos += spinRadiansToTicks((2 * Math.PI) / 3);
             return false;
         }
     }
 
-    public Action autoChamberUp() {
-        return new Chamber.AutonChamberUp();
+    public Action autoCycle() {
+        return new Chamber.AutonCycle();
     }
 
-    public class AutonChamberDown implements Action {
+    public class AutonCycleTwice implements Action {
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            //left_lift.setPower(0);
-            //right_lift.setPower(0);
+            if (target == 1) {
+                target = 0;
+            } else if (target == 2) {
+                target = 1;
+            }  else {
+                target = 2;
+            }
+            targetPos += spinRadiansToTicks((4 * Math.PI) / 3);
             return false;
         }
     }
 
-    public Action autoChamberDown() {
-        return new Chamber.AutonChamberDown();
+    public Action autoCycleTwice() {
+        return new Chamber.AutonCycleTwice();
+    }
+
+    public class AutonLaunch implements Action {
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+
+            return false;
+        }
     }
 }

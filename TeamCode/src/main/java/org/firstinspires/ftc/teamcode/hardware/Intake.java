@@ -1,9 +1,12 @@
 package org.firstinspires.ftc.teamcode.hardware;
 
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Intake {
 
@@ -14,7 +17,6 @@ public class Intake {
     double power;
 
     private DcMotorEx intake;
-
 
     public Intake(OpMode opmode) { myOpMode = opmode; }
 

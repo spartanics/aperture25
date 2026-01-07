@@ -30,13 +30,10 @@ public class Headless extends OpMode {
 
     boolean pressed_a = false;
 
-
     // Read pose
     Pose2d poseEstimate;
     Vector2d input;
     double headlessHeading;
-
-
 
     private void gamepadToMovement() {
         float xDir = -gamepad1.left_stick_x;
@@ -59,6 +56,7 @@ public class Headless extends OpMode {
 
     @Override
     public void init() {
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
         intake.init();
         chamber.init();
@@ -131,8 +129,6 @@ public class Headless extends OpMode {
         intake.sendTelemetry();
         chamber.sendTelemetry();
         launcher.sendTelemetry();
-
-
 
         updateTelemetry(telemetry);
 

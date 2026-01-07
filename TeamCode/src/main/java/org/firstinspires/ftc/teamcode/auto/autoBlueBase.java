@@ -32,10 +32,10 @@ public class autoBlueBase extends LinearOpMode {
         drive = new MecanumDrive(hardwareMap, startPose);
         TrajectoryActionBuilder build = drive.actionBuilder(startPose)
                 .afterTime(3, launcher.autonSpinUp())
-                .afterTime(2, chamber.autoChamberUp())
+//                .afterTime(2, chamber.autoChamberUp())
                 .afterTime(3, launcher.autonSpinDown())
                 .splineToLinearHeading(new Pose2d(new Vector2d(12, -25), Math.toRadians(270)), Math.toRadians(230))
-                .afterTime(2, chamber.autoChamberDown())
+//                .afterTime(2, chamber.autoChamberDown())
                 ;
 //        TrajectoryActionBuilder flipped = new TrajectoryActionBuilder(build,
 //                new TrajectoryBuilderParams(pose -> new Pose2dDual<>(
@@ -70,8 +70,8 @@ public class autoBlueBase extends LinearOpMode {
                 launcher.autonListen(),
                 launcher.autonSpinUp(),
                 launcher.autonSpinDown(),
-                chamber.autoChamberUp(),
-                chamber.autoChamberDown(),
+//                chamber.autoChamberUp(),
+//                chamber.autoChamberDown(),
                 build.build()
         ));
 

@@ -69,8 +69,8 @@ public class autoBlueGoal extends LinearOpMode {
                 launcher.autonListen(),
                 launcher.autonSpinUp(),
                 launcher.autonSpinDown(),
-                chamber.autoChamberUp(),
-                chamber.autoChamberDown(),
+//                chamber.autoChamberUp(),
+//                chamber.autoChamberDown(),
                 build.build()
         ));
 
