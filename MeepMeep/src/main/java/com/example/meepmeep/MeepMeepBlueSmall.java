@@ -14,7 +14,7 @@ public class MeepMeepBlueSmall {
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
                 .build();
-
+//launch from big triangle if possible
         myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(56, 10, Math.toRadians(30)))
                 .waitSeconds(2)
                 .setReversed(true)

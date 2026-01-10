@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.hardware.Launcher;
 
 @Config
 @Autonomous(name = "Auto Red Goal", group = "Autonomous")
-public class autoRedGoal extends LinearOpMode {
+public class autoRedBig extends LinearOpMode {
     Pose2d startPose;
     MecanumDrive drive;
 
@@ -27,14 +27,20 @@ public class autoRedGoal extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        startPose = new Pose2d(-50, 46, Math.toRadians(-45));
+        startPose = new Pose2d(-54, 47, Math.toRadians(-55));
         drive = new MecanumDrive(hardwareMap, startPose);
         TrajectoryActionBuilder build = drive.actionBuilder(startPose)
-                //.afterTime(3, launcher.autonSpinUp())
-                //.afterTime(2, chamber.autoChamberUp())
-                //.afterTime(3, launcher.autonSpinDown())
-                .splineToLinearHeading(new Pose2d(new Vector2d(12, 25), Math.toRadians(270)), Math.toRadians(10))
-                //.afterTime(2, chamber.autoChamberDown())
+                .splineToLinearHeading(new Pose2d(new Vector2d(-23, 0), Math.toRadians(0)), Math.toRadians(0))
+                .splineToLinearHeading(new Pose2d(new Vector2d(-17, 10), Math.toRadians(-50)), Math.toRadians(0))
+                .splineToLinearHeading(new Pose2d(new Vector2d(-11, 27), Math.toRadians(-270)), Math.toRadians(90))
+                .splineToConstantHeading(new Pose2d(new Vector2d(-11, 54), Math.toRadians(-180)).component1(), Math.toRadians(90))
+                .setReversed(true)
+                .splineToLinearHeading(new Pose2d(new Vector2d(-17, 10), Math.toRadians(-50)), Math.toRadians(-90))
+                .splineToLinearHeading(new Pose2d(new Vector2d(12, 24), Math.toRadians(-270)), Math.toRadians(90))
+                .splineToConstantHeading(new Pose2d(new Vector2d(12, 53), Math.toRadians(-180)).component1(), Math.toRadians(90))
+                .setReversed(true)
+                .splineToLinearHeading(new Pose2d(new Vector2d(-17, 10), Math.toRadians(-50)), Math.toRadians(0))
+                .splineToLinearHeading(new Pose2d(new Vector2d(35, 24), Math.toRadians(-270)), Math.toRadians(0))
                 ;
 //        TrajectoryActionBuilder flipped = new TrajectoryActionBuilder(build,
 //                new TrajectoryBuilderParams(pose -> new Pose2dDual<>(

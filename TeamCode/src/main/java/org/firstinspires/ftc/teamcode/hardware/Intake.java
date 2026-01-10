@@ -1,6 +1,10 @@
 package org.firstinspires.ftc.teamcode.hardware;
 
+import androidx.annotation.NonNull;
+
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -52,4 +56,45 @@ public class Intake {
         myOpMode.telemetry.addData("Power", "%.2f", power);
         myOpMode.telemetry.addLine();
     }
+
+
+    public class AutonListen implements Action {
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            intake.setPower(power);
+            return true;
+        }
+    }
+
+    public Action autonListen() {
+        return new Intake.AutonListen();
+    }
+
+    public class AutonIntakeStart implements Action {
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            intake.setPower(1);
+            return false;
+        }
+    }
+
+    public Action autonIntakeStart() {return new Intake.AutonIntakeStart();}
+
+    public class AutonIntakeStop implements Action {
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            intake.setPower(0);
+            return false;
+        }
+    }
+
+    public Action autonIntakeStop() {
+        return new Intake.AutonIntakeStop();
+    }
+
 }
+
+

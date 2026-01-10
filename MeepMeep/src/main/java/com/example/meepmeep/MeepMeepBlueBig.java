@@ -14,7 +14,7 @@ public class MeepMeepBlueBig {
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
                 .build();
-
+//launch is (-2.3, 0)
         myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(-54, -47, Math.toRadians(55)))
                 .waitSeconds(2)
                 .splineToLinearHeading(new Pose2d(new Vector2d(-23, -0), Math.toRadians(0)), Math.toRadians(90))

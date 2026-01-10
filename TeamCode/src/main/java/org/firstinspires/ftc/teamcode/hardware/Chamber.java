@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.hardware;
 
 import androidx.annotation.NonNull;
 
-import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.arcrobotics.ftclib.controller.PIDFController;
@@ -11,8 +10,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class Chamber {
 
@@ -216,4 +213,9 @@ public class Chamber {
             return false;
         }
     }
+
+    public Action autoLaunch() {
+        return new Chamber.AutonLaunch();
+    }
+
 }
