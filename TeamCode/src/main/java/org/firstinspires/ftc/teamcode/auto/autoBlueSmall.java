@@ -38,12 +38,15 @@ public class autoBlueSmall extends LinearOpMode {
                 /*.afterTime(0.5, launcher.autonSpinUp())
                 .afterTime(1, chamber.autoLaunch())
                 .afterTime(0, launcher.autonSpinDown())*/
+//                .afterTime(0.5, launcher.autonSpinUp())
+//                .afterTime(1, chamber.autoLaunch())
+//                .afterTime(0, launcher.autonSpinDown())
 
                 .splineToLinearHeading(new Pose2d(new Vector2d(35, -27), Math.toRadians(270)), Math.toRadians(-90))
                 //intake mechs
-                .afterTime(0, intake.autonIntakeStart())
+//                .afterTime(0, intake.autonIntakeStart())
                 .splineToConstantHeading(new Pose2d(new Vector2d(35, -58), Math.toRadians(180)).component1(), Math.toRadians(-90))
-                .afterTime(0, intake.autonIntakeStop())
+//                .afterTime(0, intake.autonIntakeStop())
                 //sorting mechs
                 .setReversed(true)
                 .splineToLinearHeading(new Pose2d(new Vector2d(58, -12), Math.toRadians(30)), Math.toRadians(60))
@@ -64,6 +67,24 @@ public class autoBlueSmall extends LinearOpMode {
                 /*.afterTime(0.5, launcher.autonSpinUp())
                 .afterTime(1, chamber.autoLaunch())
                 .afterTime(0, launcher.autonSpinDown())*/
+                .splineToLinearHeading(new Pose2d(new Vector2d(56, 10), Math.toRadians(30)), Math.toRadians(60))
+                //launch mech
+//                .afterTime(0.5, launcher.autonSpinUp())
+//                .afterTime(1, chamber.autoLaunch())
+//                .afterTime(0, launcher.autonSpinDown())
+                .setReversed(true)
+                .splineToLinearHeading(new Pose2d(new Vector2d(11, -27), Math.toRadians(270)), Math.toRadians(-90))
+                //intake mech
+//                .afterTime(0, intake.autonIntakeStart())
+                .splineToConstantHeading(new Pose2d(new Vector2d(11, -58), Math.toRadians(180)).component1(), Math.toRadians(-90))
+//                .afterTime(0, intake.autonIntakeStop())
+                //sorting mech
+                .setReversed(true)
+                .splineToLinearHeading(new Pose2d(new Vector2d(56, 10), Math.toRadians(30)), Math.toRadians(60))
+                //launching mech
+//                .afterTime(0.5, launcher.autonSpinUp())
+//                .afterTime(1, chamber.autoLaunch())
+//                .afterTime(0, launcher.autonSpinDown())
                 .setReversed(true)
                 .splineToLinearHeading(new Pose2d(new Vector2d(-11, -30), Math.toRadians(270)), Math.toRadians(-90))
                 ;
