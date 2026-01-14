@@ -15,18 +15,18 @@ public class MeepMeepBlueSmall {
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
                 .build();
 //launch from big triangle if possible
-        myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(56, 10, Math.toRadians(30)))
+        myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(58, -12, Math.toRadians(30)))
                 .waitSeconds(2)
                 .setReversed(true)
                 .splineToLinearHeading(new Pose2d(new Vector2d(35, -27), Math.toRadians(270)), Math.toRadians(-90))
                 .splineToConstantHeading(new Pose2d(new Vector2d(35, -58), Math.toRadians(180)).component1(), Math.toRadians(-90))
                 .setReversed(true)
-                .splineToLinearHeading(new Pose2d(new Vector2d(56, 10), Math.toRadians(30)), Math.toRadians(60))
+                .splineToLinearHeading(new Pose2d(new Vector2d(58, -12), Math.toRadians(30)), Math.toRadians(60))
                 .setReversed(true)
                 .splineToLinearHeading(new Pose2d(new Vector2d(11, -27), Math.toRadians(270)), Math.toRadians(-90))
                 .splineToConstantHeading(new Pose2d(new Vector2d(11, -58), Math.toRadians(180)).component1(), Math.toRadians(-90))
                 .setReversed(true)
-                .splineToLinearHeading(new Pose2d(new Vector2d(56, 10), Math.toRadians(30)), Math.toRadians(60))
+                .splineToLinearHeading(new Pose2d(new Vector2d(58, -12), Math.toRadians(30)), Math.toRadians(60))
                 .setReversed(true)
                 .splineToLinearHeading(new Pose2d(new Vector2d(-11, -30), Math.toRadians(270)), Math.toRadians(-90))
                 .build());

@@ -34,7 +34,7 @@ public class autoBlueBig extends LinearOpMode {
         TrajectoryActionBuilder build = drive.actionBuilder(startPose)
                 .splineToLinearHeading(new Pose2d(new Vector2d(-23, -0), Math.toRadians(0)), Math.toRadians(90))
                 //scan
-                .splineToLinearHeading(new Pose2d(new Vector2d(-2.3, 0), Math.toRadians(50)), Math.toRadians(0))
+                .splineToLinearHeading(new Pose2d(new Vector2d(-2.3, 0), Math.toRadians(50)), Math.toRadians(10))
                 //lauch and sort
                 .afterTime(0.5, launcher.autonSpinUp())
                 .afterTime(1, chamber.autoLaunch())
@@ -56,7 +56,7 @@ public class autoBlueBig extends LinearOpMode {
                 .splineToConstantHeading(new Pose2d(new Vector2d(11, -56), Math.toRadians(180)).component1(), Math.toRadians(-90))
                 .afterTime(0, intake.autonIntakeStop())
                 .setReversed(true)
-                .splineToLinearHeading(new Pose2d(new Vector2d(-2.3, -0), Math.toRadians(50)), Math.toRadians(0))
+                .splineToLinearHeading(new Pose2d(new Vector2d(-2.3, -0), Math.toRadians(50)), Math.toRadians(10))
                 //lauch and sort
                 .afterTime(0.5, launcher.autonSpinUp())
                 .afterTime(1, chamber.autoLaunch())

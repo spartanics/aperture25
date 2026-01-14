@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.hardware.Launcher;
 
 
 @Config
-@Autonomous(name = "Auto Blue Base", group = "Autonomous")
+@Autonomous(name = "Auto Blue Small", group = "Autonomous")
 public class autoBlueSmall extends LinearOpMode {
     Pose2d startPose;
     MecanumDrive drive;
@@ -30,14 +30,15 @@ public class autoBlueSmall extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        startPose = new Pose2d(56, 10, Math.toRadians(30));
+        startPose = new Pose2d(58, -12, Math.toRadians(20));
         drive = new MecanumDrive(hardwareMap, startPose);
         TrajectoryActionBuilder build = drive.actionBuilder(startPose)
                 //scan
                 //lauch&sort mechs
-                .afterTime(0.5, launcher.autonSpinUp())
+                /*.afterTime(0.5, launcher.autonSpinUp())
                 .afterTime(1, chamber.autoLaunch())
-                .afterTime(0, launcher.autonSpinDown())
+                .afterTime(0, launcher.autonSpinDown())*/
+
                 .splineToLinearHeading(new Pose2d(new Vector2d(35, -27), Math.toRadians(270)), Math.toRadians(-90))
                 //intake mechs
                 .afterTime(0, intake.autonIntakeStart())
@@ -45,24 +46,24 @@ public class autoBlueSmall extends LinearOpMode {
                 .afterTime(0, intake.autonIntakeStop())
                 //sorting mechs
                 .setReversed(true)
-                .splineToLinearHeading(new Pose2d(new Vector2d(56, 10), Math.toRadians(30)), Math.toRadians(60))
+                .splineToLinearHeading(new Pose2d(new Vector2d(58, -12), Math.toRadians(30)), Math.toRadians(60))
                 //lauchmech
-                .afterTime(0.5, launcher.autonSpinUp())
+                /*.afterTime(0.5, launcher.autonSpinUp())
                 .afterTime(1, chamber.autoLaunch())
-                .afterTime(0, launcher.autonSpinDown())
+                .afterTime(0, launcher.autonSpinDown())*/
                 .setReversed(true)
                 .splineToLinearHeading(new Pose2d(new Vector2d(11, -27), Math.toRadians(270)), Math.toRadians(-90))
                 //intake mech
                 .afterTime(0, intake.autonIntakeStart())
-                .splineToConstantHeading(new Pose2d(new Vector2d(11, -58), Math.toRadians(180)).component1(), Math.toRadians(-90))
+                .splineToConstantHeading(new Pose2d(new Vector2d(10, -58), Math.toRadians(180)).component1(), Math.toRadians(-90))
                 .afterTime(0, intake.autonIntakeStop())
                 //sorting mech
                 .setReversed(true)
-                .splineToLinearHeading(new Pose2d(new Vector2d(56, 10), Math.toRadians(30)), Math.toRadians(60))
+                .splineToLinearHeading(new Pose2d(new Vector2d(58, -12), Math.toRadians(30)), Math.toRadians(60))
                 //lauching mech
-                .afterTime(0.5, launcher.autonSpinUp())
+                /*.afterTime(0.5, launcher.autonSpinUp())
                 .afterTime(1, chamber.autoLaunch())
-                .afterTime(0, launcher.autonSpinDown())
+                .afterTime(0, launcher.autonSpinDown())*/
                 .setReversed(true)
                 .splineToLinearHeading(new Pose2d(new Vector2d(-11, -30), Math.toRadians(270)), Math.toRadians(-90))
                 ;
@@ -88,7 +89,7 @@ public class autoBlueSmall extends LinearOpMode {
 
 
         launcher.init();
-        chamber.init();
+        //chamber.init();
         intake.init();
 
 
@@ -100,10 +101,10 @@ public class autoBlueSmall extends LinearOpMode {
                 launcher.autonListen(),
                 launcher.autonSpinUp(),
                 launcher.autonSpinDown(),
-                chamber.autoListen(),
-                chamber.autoCycle(),
-                chamber.autoCycleTwice(),
-                chamber.autoLaunch(),
+                //chamber.autoListen(),
+                //chamber.autoCycle(),
+                //chamber.autoCycleTwice(),
+                //chamber.autoLaunch(),
                 intake.autonListen(),
                 intake.autonIntakeStop(),
                 intake.autonIntakeStart(),
