@@ -72,15 +72,15 @@ public class Launcher {
 //        }
 //
 
-//        if (myOpMode.gamepad1.dpad_up) {
-//            adjusted_power = HardwareConstants.HIGH_LAUNCH_POWER;
-//        } else if (myOpMode.gamepad1.dpad_down) {
-//            adjusted_power = HardwareConstants.LOW_LAUNCH_POWER;
-//        } else if (myOpMode.gamepad1.dpad_left) {
-//            adjusted_power = 0.65;
-//        } else if (myOpMode.gamepad1.dpad_right) {
-//            adjusted_power = 0.75;
-//        }
+        if (myOpMode.gamepad1.dpad_up) {
+            adjusted_power = HardwareConstants.HIGH_LAUNCH_POWER;
+        } else if (myOpMode.gamepad1.dpad_down) {
+            adjusted_power = HardwareConstants.LOW_LAUNCH_POWER;
+        } else if (myOpMode.gamepad1.dpad_left) {
+            adjusted_power = 0.85;
+        } else if (myOpMode.gamepad1.dpad_right) {
+            adjusted_power = 0.95;
+        }
 
         linear.setPosition(HardwareConstants.LAUNCH_LINE);
 
