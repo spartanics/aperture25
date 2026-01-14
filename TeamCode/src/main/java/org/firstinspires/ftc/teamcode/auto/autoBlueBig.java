@@ -61,7 +61,7 @@ public class autoBlueBig extends LinearOpMode {
                 .afterTime(0.5, launcher.autonSpinUp())
                 .afterTime(1, chamber.autoLaunch())
                 .afterTime(0, launcher.autonSpinDown())
-                .splineToLinearHeading(new Pose2d(new Vector2d(35, -27), Math.toRadians(270)), Math.toRadians(-90))
+                .splineToLinearHeading(new Pose2d(new Vector2d(35, -15), Math.toRadians(270)), Math.toRadians(-90))
                 ;
 //        TrajectoryActionBuilder flipped = new TrajectoryActionBuilder(build,
 //                new TrajectoryBuilderParams(pose -> new Pose2dDual<>(

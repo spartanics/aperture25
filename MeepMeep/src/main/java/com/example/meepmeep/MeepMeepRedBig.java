@@ -18,18 +18,18 @@ public class MeepMeepRedBig {
         myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(-54, 47, Math.toRadians(-55)))
                 .waitSeconds(2)
                 .splineToLinearHeading(new Pose2d(new Vector2d(-23, 0), Math.toRadians(0)), Math.toRadians(0))
-                .splineToLinearHeading(new Pose2d(new Vector2d(-17, 10), Math.toRadians(-50)), Math.toRadians(0))
-                .splineToLinearHeading(new Pose2d(new Vector2d(-11, 27), Math.toRadians(-270)), Math.toRadians(90))
-                .splineToConstantHeading(new Pose2d(new Vector2d(-11, 54), Math.toRadians(-180)).component1(), Math.toRadians(90))
+                .splineToLinearHeading(new Pose2d(new Vector2d(-17, 10), Math.toRadians(-50)), Math.toRadians(200))
+                .splineToLinearHeading(new Pose2d(new Vector2d(-10, 27), Math.toRadians(-270)), Math.toRadians(90))
+                .splineToConstantHeading(new Pose2d(new Vector2d(-10, 52), Math.toRadians(-180)).component1(), Math.toRadians(90))
 
                 .setReversed(true)
-                .splineToLinearHeading(new Pose2d(new Vector2d(-17, 10), Math.toRadians(-50)), Math.toRadians(-90))
+                .splineToLinearHeading(new Pose2d(new Vector2d(-17, 10), Math.toRadians(-50)), Math.toRadians(0))
 
-                .splineToLinearHeading(new Pose2d(new Vector2d(12, 24), Math.toRadians(-270)), Math.toRadians(90))
-                .splineToConstantHeading(new Pose2d(new Vector2d(12, 53), Math.toRadians(-180)).component1(), Math.toRadians(90))
+                .splineToLinearHeading(new Pose2d(new Vector2d(11, 27), Math.toRadians(-270)), Math.toRadians(90))
+                .splineToConstantHeading(new Pose2d(new Vector2d(11, 52), Math.toRadians(-180)).component1(), Math.toRadians(90))
                 .setReversed(true)
                 .splineToLinearHeading(new Pose2d(new Vector2d(-17, 10), Math.toRadians(-50)), Math.toRadians(0))
-                .splineToLinearHeading(new Pose2d(new Vector2d(35, 24), Math.toRadians(-270)), Math.toRadians(0))
+                .splineToLinearHeading(new Pose2d(new Vector2d(35, 15), Math.toRadians(-270)), Math.toRadians(0))
                 .build());
 
         meepMeep.setBackground(MeepMeep.Background.FIELD_DECODE_JUICE_DARK)
