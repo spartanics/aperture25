@@ -30,16 +30,17 @@ public class autoRedBig extends LinearOpMode {
         startPose = new Pose2d(-54, 47, Math.toRadians(-55));
         drive = new MecanumDrive(hardwareMap, startPose);
         TrajectoryActionBuilder build = drive.actionBuilder(startPose)
+                .waitSeconds(2)
                 .splineToLinearHeading(new Pose2d(new Vector2d(-23, 0), Math.toRadians(0)), Math.toRadians(0))
-                .splineToLinearHeading(new Pose2d(new Vector2d(-17, 10), Math.toRadians(-50)), Math.toRadians(200))
-                .splineToLinearHeading(new Pose2d(new Vector2d(-10, 27), Math.toRadians(-270)), Math.toRadians(90))
-                .splineToConstantHeading(new Pose2d(new Vector2d(-10, 52), Math.toRadians(-180)).component1(), Math.toRadians(90))
+                .splineToLinearHeading(new Pose2d(new Vector2d(-2.3, 0), Math.toRadians(-50)), Math.toRadians(10))
+                .splineToLinearHeading(new Pose2d(new Vector2d(-11, 27), Math.toRadians(-270)), Math.toRadians(90))
+                .splineToConstantHeading(new Pose2d(new Vector2d(-11, 52), Math.toRadians(-180)).component1(), Math.toRadians(90))
                 .setReversed(true)
-                .splineToLinearHeading(new Pose2d(new Vector2d(-17, 10), Math.toRadians(-50)), Math.toRadians(200))
-                .splineToLinearHeading(new Pose2d(new Vector2d(11, 27), Math.toRadians(-270)), Math.toRadians(90))
-                .splineToConstantHeading(new Pose2d(new Vector2d(11, 52), Math.toRadians(-180)).component1(), Math.toRadians(90))
+                .splineToLinearHeading(new Pose2d(new Vector2d(-2.3, 0), Math.toRadians(-50)), Math.toRadians(10))
+                .splineToLinearHeading(new Pose2d(new Vector2d(12, 27), Math.toRadians(-270)), Math.toRadians(90))
+                .splineToConstantHeading(new Pose2d(new Vector2d(12, 52), Math.toRadians(-180)).component1(), Math.toRadians(90))
                 .setReversed(true)
-                .splineToLinearHeading(new Pose2d(new Vector2d(-17, 10), Math.toRadians(-50)), Math.toRadians(200))
+                .splineToLinearHeading(new Pose2d(new Vector2d(-2.3, 0), Math.toRadians(-50)), Math.toRadians(10))
                 .splineToLinearHeading(new Pose2d(new Vector2d(35, 15), Math.toRadians(-270)), Math.toRadians(0))
                 ;
 //        TrajectoryActionBuilder flipped = new TrajectoryActionBuilder(build,

@@ -15,20 +15,20 @@ public class MeepMeepRedSmall {
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
                 .build();
 
-        myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(56, -10, Math.toRadians(-120)))
+        myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(56, 10, Math.toRadians(-20)))
                 .waitSeconds(2)
                 .setReversed(true)
-                .splineToLinearHeading(new Pose2d(new Vector2d(35, 27), Math.toRadians(270)), Math.toRadians(90))
-                .splineToConstantHeading(new Pose2d(new Vector2d(35, 58), Math.toRadians(180)).component1(), Math.toRadians(-90))
+                .splineToLinearHeading(new Pose2d(new Vector2d(36, 27), Math.toRadians(90)), Math.toRadians(90))
+                .splineToConstantHeading(new Pose2d(new Vector2d(36, 56), Math.toRadians(180)).component1(), Math.toRadians(-90))
                 .setReversed(true)
-                .splineToLinearHeading(new Pose2d(new Vector2d(56, -10), Math.toRadians(30)), Math.toRadians(60))
+                .splineToLinearHeading(new Pose2d(new Vector2d(56, 10), Math.toRadians(-20)), Math.toRadians(60))
                 .setReversed(true)
-                .splineToLinearHeading(new Pose2d(new Vector2d(11, 27), Math.toRadians(270)), Math.toRadians(-90))
-                .splineToConstantHeading(new Pose2d(new Vector2d(11, 58), Math.toRadians(180)).component1(), Math.toRadians(-90))
+                .splineToLinearHeading(new Pose2d(new Vector2d(12, 27), Math.toRadians(90)), Math.toRadians(90))
+                .splineToConstantHeading(new Pose2d(new Vector2d(12, 55), Math.toRadians(180)).component1(), Math.toRadians(-90))
                 .setReversed(true)
-                .splineToLinearHeading(new Pose2d(new Vector2d(56, -10), Math.toRadians(30)), Math.toRadians(60))
+                .splineToLinearHeading(new Pose2d(new Vector2d(56, 10), Math.toRadians(-20)), Math.toRadians(60))
                 .setReversed(true)
-                .splineToLinearHeading(new Pose2d(new Vector2d(-11, 30), Math.toRadians(270)), Math.toRadians(-90))
+                .splineToLinearHeading(new Pose2d(new Vector2d(-10, 30), Math.toRadians(90)), Math.toRadians(180))
                 .build());
 
         meepMeep.setBackground(MeepMeep.Background.FIELD_DECODE_JUICE_DARK)
