@@ -38,10 +38,10 @@ public class autoBlueSmall extends LinearOpMode {
                 .afterTime(0.5, launcher.autoSmallSpinUp())
                 .afterTime(1, chamber.autoLaunch())
                 .afterTime(0.2, launcher.autoSpinDown())
-                .splineToLinearHeading(new Pose2d(new Vector2d(35, -27), Math.toRadians(270)), Math.toRadians(-90))
+                .splineToLinearHeading(new Pose2d(new Vector2d(36, -27), Math.toRadians(270)), Math.toRadians(-90))
                 // intake mechs
                 .afterTime(0, intake.autoIntakeStart())
-                .splineToConstantHeading(new Pose2d(new Vector2d(35, -58), Math.toRadians(180)).component1(), Math.toRadians(-90))
+                .splineToConstantHeading(new Pose2d(new Vector2d(36, -58), Math.toRadians(180)).component1(), Math.toRadians(-90))
                 .afterTime(0, intake.autoIntakeStop())
                 // sorting mechs
                 .setReversed(true)
@@ -51,10 +51,10 @@ public class autoBlueSmall extends LinearOpMode {
                 .afterTime(1, chamber.autoLaunch())
                 .afterTime(0.2, launcher.autoSpinDown())
                 .setReversed(true)
-                .splineToLinearHeading(new Pose2d(new Vector2d(10, -27), Math.toRadians(270)), Math.toRadians(-90))
+                .splineToLinearHeading(new Pose2d(new Vector2d(11, -27), Math.toRadians(270)), Math.toRadians(-90))
 //                intake mech
                 .afterTime(0, intake.autoIntakeStart())
-                .splineToConstantHeading(new Pose2d(new Vector2d(10, -58), Math.toRadians(180)).component1(), Math.toRadians(-90))
+                .splineToConstantHeading(new Pose2d(new Vector2d(11, -58), Math.toRadians(180)).component1(), Math.toRadians(-90))
                 .afterTime(0, intake.autoIntakeStop())
 //                sorting mech
                 .setReversed(true)
