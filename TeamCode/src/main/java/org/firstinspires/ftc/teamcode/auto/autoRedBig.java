@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.hardware.Chamber;
+import org.firstinspires.ftc.teamcode.hardware.Intake;
 import org.firstinspires.ftc.teamcode.hardware.Launcher;
 
 
@@ -22,7 +23,7 @@ public class autoRedBig extends LinearOpMode {
 
     Chamber chamber = new Chamber(this);
     Launcher launcher = new Launcher(this);
-
+    Intake intake = new Intake(this);
 
 
     @Override
@@ -72,11 +73,9 @@ public class autoRedBig extends LinearOpMode {
         waitForStart();
 
         Actions.runBlocking(new ParallelAction(
-                launcher.autonListen(),
-                launcher.autonSpinUp(),
-                launcher.autonSpinDown(),
-//                chamber.autoChamberUp(),
-//                chamber.autoChamberDown(),
+                launcher.autoListen(),
+                chamber.autoListen(),
+                intake.autoListen(),
                 build.build()
         ));
 

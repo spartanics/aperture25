@@ -45,7 +45,7 @@ public class autoRedSmall extends LinearOpMode {
 //                lastTangent: Rotation2d,
 //                ms:List<MarkerFactory>,
 //        cont: (Action) -> Action);
-
+// psst hey
 
 
 
@@ -66,9 +66,7 @@ public class autoRedSmall extends LinearOpMode {
         waitForStart();
 
         Actions.runBlocking(new ParallelAction(
-                launcher.autonListen(),
-                launcher.autonSpinUp(),
-                launcher.autonSpinDown(),
+                launcher.autoListen(),
 //                chamber.autoChamberUp(),
 //                chamber.autoChamberDown(),
                 build.build()

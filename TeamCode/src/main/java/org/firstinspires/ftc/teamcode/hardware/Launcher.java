@@ -23,13 +23,21 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.robotcore.internal.opmode.TelemetryImpl;
 
+import java.util.concurrent.TimeUnit;
+
 public class Launcher {
 
     private OpMode myOpMode;
 
+    ElapsedTime rpmtimer = new ElapsedTime();
+
     private double ddistance;
 
     private double adjusted_power = 0.7;
+
+    private double storedticks = 0;
+
+    private double rpm = 0;
 
     double power = 0.0;
 
@@ -42,6 +50,10 @@ public class Launcher {
 
 
     public void init() {
+
+        power = 0;
+
+
         flywheel = myOpMode.hardwareMap.get(DcMotorEx.class, "flywheel");
 
         linear = myOpMode.hardwareMap.get(Servo.class, "linear");
@@ -49,8 +61,10 @@ public class Launcher {
         flywheel.setDirection(DcMotorSimple.Direction.REVERSE);
 
         flywheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        flywheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        flywheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
+
+
 
     //done done done
     //done done done
@@ -71,6 +85,12 @@ public class Launcher {
 //            adjusted_power = 0.7;
 //        }
 //
+
+        if (rpmtimer.seconds() > 0.2) {
+            rpm = 60 * ((float) flywheel.getCurrentPosition() - storedticks) / 27 * (rpmtimer.seconds());
+            rpmtimer.reset();
+            storedticks = flywheel.getCurrentPosition();
+        }
 
         if (myOpMode.gamepad1.dpad_up) {
             adjusted_power = HardwareConstants.HIGH_LAUNCH_POWER;
@@ -98,6 +118,9 @@ public class Launcher {
     public void sendTelemetry() {
         myOpMode.telemetry.addLine("----LAUNCHER----");
         myOpMode.telemetry.addData("Power", "%.2f", adjusted_power);
+        myOpMode.telemetry.addData("Pos", "%d", flywheel.getCurrentPosition());
+        myOpMode.telemetry.addData("Timer", rpmtimer.seconds());
+        myOpMode.telemetry.addData("RPM", "%.2f", rpm);
         myOpMode.telemetry.addData("Current", "%.2f", flywheel.getCurrent(CurrentUnit.AMPS));
         myOpMode.telemetry.addData("Linear Pos", "%.2f", linear.getPosition());
         myOpMode.telemetry.addLine();
@@ -113,33 +136,46 @@ public class Launcher {
         }
     }
 
-    public Action autonListen() {
+    public Action autoListen() {
         return new Launcher.AutonListen();
     }
 
-    public class AutonSpinUp implements Action {
+    public class AutonBigSpinUp implements Action {
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            flywheel.setPower(0.6);
+            power = 1;
             return false;
         }
     }
 
-    public Action autonSpinUp() {
-        return new Launcher.AutonSpinUp();
+    public Action autoBigSpinUp() {
+        return new Launcher.AutonBigSpinUp();
+    }
+
+    public class AutonSmallSpinUp implements Action {
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            power = 1;
+            return false;
+        }
+    }
+
+    public Action autoSmallSpinUp() {
+        return new Launcher.AutonSmallSpinUp();
     }
 
     public class AutonSpinDown implements Action {
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            flywheel.setPower(0);
+            power = 0;
             return false;
         }
     }
 
-    public Action autonSpinDown() {
+    public Action autoSpinDown() {
         return new Launcher.AutonSpinDown();
     }
 }

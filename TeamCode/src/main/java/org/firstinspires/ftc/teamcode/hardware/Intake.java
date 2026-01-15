@@ -67,7 +67,7 @@ public class Intake {
         }
     }
 
-    public Action autonListen() {
+    public Action autoListen() {
         return new Intake.AutonListen();
     }
 
@@ -75,23 +75,23 @@ public class Intake {
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            intake.setPower(1);
+            power = -1;
             return false;
         }
     }
 
-    public Action autonIntakeStart() {return new Intake.AutonIntakeStart();}
+    public Action autoIntakeStart() {return new Intake.AutonIntakeStart();}
 
     public class AutonIntakeStop implements Action {
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            intake.setPower(0);
+            power = 0;
             return false;
         }
     }
 
-    public Action autonIntakeStop() {
+    public Action autoIntakeStop() {
         return new Intake.AutonIntakeStop();
     }
 

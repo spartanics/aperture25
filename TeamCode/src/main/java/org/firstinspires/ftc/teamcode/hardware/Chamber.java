@@ -159,9 +159,12 @@ public class Chamber {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             spindex.setPower(spinPidf.calculate(spindex.getCurrentPosition(), targetPos));
-            spin1.setPosition(0.1);
-            spin2.setPosition(0.1);
-            spin3.setPosition(0.1);
+
+            if (swapCD.seconds() > 0.2) {
+                spin1.setPosition(0);
+                spin2.setPosition(0);
+                spin3.setPosition(0);
+            }
             return true;
         }
     }
@@ -212,7 +215,14 @@ public class Chamber {
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-
+            swapCD.reset();
+            if (target == 0) {
+                spin3.setPosition(0.4);
+            } else if (target == 1) {
+                spin2.setPosition(0.4);
+            } else if (target == 2) {
+                spin1.setPosition(0.4);
+            }
             return false;
         }
     }
