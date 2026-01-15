@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.hardware.Launcher;
 
 
 @Config
-@Autonomous(name = "Auto Blue Small", group = "Autonomous")
+@Autonomous(name = "Auto Blue Base", group = "Autonomous")
 public class autoBlueSmall extends LinearOpMode {
     Pose2d startPose;
     MecanumDrive drive;
@@ -27,7 +27,7 @@ public class autoBlueSmall extends LinearOpMode {
     Intake intake = new Intake(this);
 
 //this auton cannot scan and sort, these features need to be implemented before a auton is complete
-//chamber is temp disabled
+
     @Override
     public void runOpMode() throws InterruptedException {
         startPose = new Pose2d(58, -12, Math.toRadians(20));
@@ -80,7 +80,7 @@ public class autoBlueSmall extends LinearOpMode {
 
 
 
-//PoseStorage.storedPose = drive.pose;
+        //PoseStorage.storedPose = drive.pose;
 
 
 
@@ -88,7 +88,7 @@ public class autoBlueSmall extends LinearOpMode {
 
 
         launcher.init();
-       // chamber.init();
+        chamber.init();
         intake.init();
 
 
@@ -100,10 +100,10 @@ public class autoBlueSmall extends LinearOpMode {
                 launcher.autonListen(),
                 launcher.autonSpinUp(),
                 launcher.autonSpinDown(),
-                //chamber.autoListen(),
-               // chamber.autoCycle(),
-                //chamber.autoCycleTwice(),
-                //chamber.autoLaunch(),
+                chamber.autoListen(),
+                chamber.autoCycle(),
+                chamber.autoCycleTwice(),
+                chamber.autoLaunch(),
                 intake.autonListen(),
                 intake.autonIntakeStop(),
                 intake.autonIntakeStart(),
@@ -112,3 +112,4 @@ public class autoBlueSmall extends LinearOpMode {
 
     }
 }
+

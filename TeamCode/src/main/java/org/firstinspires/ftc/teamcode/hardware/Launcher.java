@@ -52,8 +52,8 @@ public class Launcher {
         flywheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
-//done done done
-//done done done
+    //done done done
+    //done done done
 
     public void listen(Pose2d pose) {
 //        double dx = (-51.3) - pose.position.x;
@@ -70,6 +70,8 @@ public class Launcher {
 //        } else {
 //            adjusted_power = 0.7;
 //        }
+//
+
         if (myOpMode.gamepad1.dpad_up) {
             adjusted_power = HardwareConstants.HIGH_LAUNCH_POWER;
         } else if (myOpMode.gamepad1.dpad_down) {
@@ -119,8 +121,7 @@ public class Launcher {
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            flywheel.setPower(1);
-            linear.setPosition(0.62);
+            flywheel.setPower(0.6);
             return false;
         }
     }
