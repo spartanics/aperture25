@@ -35,6 +35,8 @@ public class Launcher {
 
     private DcMotorEx flywheel;
 
+    private DcMotorEx otherMater;
+
     private Servo linear;
 
     public Launcher(OpMode opmode) { myOpMode = opmode; }
@@ -46,10 +48,16 @@ public class Launcher {
 
         linear = myOpMode.hardwareMap.get(Servo.class, "linear");
 
+        otherMater = myOpMode.hardwareMap.get(DcMotorEx.class, "powerwheel");
+
         flywheel.setDirection(DcMotorSimple.Direction.REVERSE);
+        otherMater.setDirection(DcMotorSimple.Direction.FORWARD);
 
         flywheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         flywheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        otherMater.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        otherMater.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     //done done done
@@ -90,8 +98,10 @@ public class Launcher {
 
         if (myOpMode.gamepad2.right_bumper) {
             flywheel.setPower(adjusted_power);
+            otherMater.setPower(adjusted_power);
         } else {
             flywheel.setPower(0.0);
+            otherMater.setPower(adjusted_power);
         }
     }
 
@@ -99,6 +109,7 @@ public class Launcher {
         myOpMode.telemetry.addLine("----LAUNCHER----");
         myOpMode.telemetry.addData("Power", "%.2f", adjusted_power);
         myOpMode.telemetry.addData("Current", "%.2f", flywheel.getCurrent(CurrentUnit.AMPS));
+        myOpMode.telemetry.addData("Current", "%.2f", otherMater.getCurrent(CurrentUnit.AMPS));
         myOpMode.telemetry.addData("Linear Pos", "%.2f", linear.getPosition());
         myOpMode.telemetry.addLine();
 //        myOpMode.telemetry.addData("Delta Distance", "%.2f", ddistance);
@@ -109,6 +120,7 @@ public class Launcher {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             flywheel.setPower(power);
+            otherMater.setPower(power);
             return true;
         }
     }
@@ -122,6 +134,7 @@ public class Launcher {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             flywheel.setPower(0.6);
+            otherMater.setPower(0.6);
             return false;
         }
     }
@@ -135,6 +148,7 @@ public class Launcher {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             flywheel.setPower(0);
+            otherMater.setPower(0);
             return false;
         }
     }
