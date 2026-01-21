@@ -20,6 +20,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.robotcore.internal.opmode.TelemetryImpl;
 
@@ -27,11 +28,20 @@ public class Launcher {
 
     private OpMode myOpMode;
 
+//    ElapsedTime rpmtimer = new ElapsedTime();
+
     private double ddistance;
 
-    private double adjusted_power = 0.7;
+    private double adjustedVelocity = 3;
+    private double adjustedLinear = HardwareConstants.LAUNCH_LINE;
 
-    double power = 0.0;
+//    private double storedticks = 0;
+
+//    private double rpm = 0;
+
+    double velocity = 0.0;
+
+    public boolean launchReady = false;
 
     private DcMotorEx flywheel;
 
@@ -44,6 +54,7 @@ public class Launcher {
 
 
     public void init() {
+
         flywheel = myOpMode.hardwareMap.get(DcMotorEx.class, "flywheel");
 
         linear = myOpMode.hardwareMap.get(Servo.class, "linear");
@@ -58,7 +69,11 @@ public class Launcher {
 
         otherMater.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         otherMater.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        flywheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
     }
+
+
 
     //done done done
     //done done done
@@ -80,34 +95,49 @@ public class Launcher {
 //        }
 //
 
-        if (myOpMode.gamepad1.dpad_up) {
-            adjusted_power = HardwareConstants.HIGH_LAUNCH_POWER;
+//        if (rpmtimer.seconds() > 0.2) {
+//            rpm = 60 * ((float) flywheel.getCurrentPosition() - storedticks) / 27 * (rpmtimer.seconds());
+//            rpmtimer.reset();
+//            storedticks = flywheel.getCurrentPosition();
+//        }
+
+        if (myOpMode.gamepad1.dpad_right) {
+            adjustedVelocity = HardwareConstants.HIGH_LAUNCH_POWER;
+            adjustedLinear = HardwareConstants.LAUNCH_LINE;
         } else if (myOpMode.gamepad1.dpad_down) {
-            adjusted_power = HardwareConstants.LOW_LAUNCH_POWER;
+            adjustedVelocity = 2.8;
+            adjustedLinear = 0.55;
         } else if (myOpMode.gamepad1.dpad_left) {
-            adjusted_power = 0.85;
-        } else if (myOpMode.gamepad1.dpad_right) {
-            adjusted_power = 0.95;
+            adjustedVelocity = 2.6;
+            adjustedLinear = 0.55;
+        } else if (myOpMode.gamepad1.dpad_up) {
+            adjustedVelocity = 3.2;
+            adjustedLinear = HardwareConstants.LAUNCH_LINE;
         }
 
-        linear.setPosition(HardwareConstants.LAUNCH_LINE);
-
-        adjusted_power = HardwareConstants.HIGH_LAUNCH_POWER;
+        linear.setPosition(adjustedLinear);
 
 //        adjusted_power = HardwareConstants.LAUNCH_POWER;
 
         if (myOpMode.gamepad2.right_bumper) {
-            flywheel.setPower(adjusted_power);
-            otherMater.setPower(adjusted_power);
+            flywheel.setVelocity(adjustedVelocity, AngleUnit.RADIANS);
         } else {
-            flywheel.setPower(0.0);
-            otherMater.setPower(adjusted_power);
+            flywheel.setVelocity(0.0);
+        }
+
+        if (myOpMode.gamepad2.right_bumper && flywheel.getVelocity(AngleUnit.RADIANS) > adjustedVelocity - 0.1) {
+            launchReady = true;
+        } else {
+            launchReady = false;
         }
     }
 
     public void sendTelemetry() {
         myOpMode.telemetry.addLine("----LAUNCHER----");
-        myOpMode.telemetry.addData("Power", "%.2f", adjusted_power);
+        myOpMode.telemetry.addData("Power", "%.2f", adjustedVelocity);
+        myOpMode.telemetry.addData("Raw Velocity", "%.2f", flywheel.getVelocity(AngleUnit.RADIANS));
+//        myOpMode.telemetry.addData("Timer", rpmtimer.seconds());
+//        myOpMode.telemetry.addData("RPM", "%.2f", rpm);
         myOpMode.telemetry.addData("Current", "%.2f", flywheel.getCurrent(CurrentUnit.AMPS));
         myOpMode.telemetry.addData("Current", "%.2f", otherMater.getCurrent(CurrentUnit.AMPS));
         myOpMode.telemetry.addData("Linear Pos", "%.2f", linear.getPosition());
@@ -115,32 +145,65 @@ public class Launcher {
 //        myOpMode.telemetry.addData("Delta Distance", "%.2f", ddistance);
     }
 
-    public class AutonListen implements  Action {
+    public class AutonSendTelemetry implements Action {
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            flywheel.setPower(power);
-            otherMater.setPower(power);
+            myOpMode.telemetry.addLine("----LAUNCHER----");
+            myOpMode.telemetry.addData("Power", "%.2f", adjustedVelocity);
+            myOpMode.telemetry.addData("Raw Velocity", "%.2f", flywheel.getVelocity(AngleUnit.RADIANS));
+//        myOpMode.telemetry.addData("Timer", rpmtimer.seconds());
+//        myOpMode.telemetry.addData("RPM", "%.2f", rpm);
+            myOpMode.telemetry.addData("Current", "%.2f", flywheel.getCurrent(CurrentUnit.AMPS));
+            myOpMode.telemetry.addData("Linear Pos", "%.2f", linear.getPosition());
+            myOpMode.telemetry.addLine();
             return true;
         }
     }
 
-    public Action autonListen() {
-        return new Launcher.AutonListen();
+    public Action autoSendTelemetry() {
+        return new Launcher.AutonSendTelemetry();
     }
 
-    public class AutonSpinUp implements Action {
+    public class AutonListen implements Action {
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            flywheel.setVelocity(velocity, AngleUnit.RADIANS);
+            return true;
+        }
+    }
+
+    public Action autoListen() {
+        return new Launcher.AutonListen();
+    }
+
+    public class AutonBigSpinUp implements Action {
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            velocity = 0.5;
             flywheel.setPower(0.6);
             otherMater.setPower(0.6);
             return false;
         }
     }
 
-    public Action autonSpinUp() {
-        return new Launcher.AutonSpinUp();
+    public Action autoBigSpinUp() {
+        return new Launcher.AutonBigSpinUp();
+    }
+
+    public class AutonSmallSpinUp implements Action {
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            velocity = 2.8;
+            return false;
+        }
+    }
+
+    public Action autoSmallSpinUp() {
+        return new Launcher.AutonSmallSpinUp();
     }
 
     public class AutonSpinDown implements Action {
@@ -149,11 +212,12 @@ public class Launcher {
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             flywheel.setPower(0);
             otherMater.setPower(0);
+            velocity = 0;
             return false;
         }
     }
 
-    public Action autonSpinDown() {
+    public Action autoSpinDown() {
         return new Launcher.AutonSpinDown();
     }
 }

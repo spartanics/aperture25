@@ -35,32 +35,32 @@ public class autoBlueBig extends LinearOpMode {
                 .splineToLinearHeading(new Pose2d(new Vector2d(-23, -0), Math.toRadians(0)), Math.toRadians(90))
                 //scan
                 .splineToLinearHeading(new Pose2d(new Vector2d(-2.3, 0), Math.toRadians(50)), Math.toRadians(10))
-                //lauch and sort
-                .afterTime(0.5, launcher.autonSpinUp())
+                //launch and sort
+                .afterTime(0.5, launcher.autoBigSpinUp())
                 .afterTime(1, chamber.autoLaunch())
-                .afterTime(0, launcher.autonSpinDown())
+                .afterTime(0, launcher.autoSpinDown())
                 .splineToLinearHeading(new Pose2d(new Vector2d(-11, -30), Math.toRadians(270)), Math.toRadians(-90))
                 //intake
-                .afterTime(0, intake.autonIntakeStart())
+                .afterTime(0, intake.autoIntakeStart())
                 .splineToConstantHeading(new Pose2d(new Vector2d(-11, -56), Math.toRadians(180)).component1(), Math.toRadians(-90))
-                .afterTime(0, intake.autonIntakeStop())
+                .afterTime(0, intake.autoIntakeStop())
                 .setReversed(true)
                 .splineToLinearHeading(new Pose2d(new Vector2d(-2.3, 0), Math.toRadians(50)), Math.toRadians(0))
                 //launch and sort
-                .afterTime(0.5, launcher.autonSpinUp())
+                .afterTime(0.5, launcher.autoBigSpinUp())
                 .afterTime(1, chamber.autoLaunch())
-                .afterTime(0, launcher.autonSpinDown())
+                .afterTime(0, launcher.autoSpinDown())
                 .splineToLinearHeading(new Pose2d(new Vector2d(11, -27), Math.toRadians(270)), Math.toRadians(-90))
                 //intake mech
-                .afterTime(0, intake.autonIntakeStart())
+                .afterTime(0, intake.autoIntakeStart())
                 .splineToConstantHeading(new Pose2d(new Vector2d(11, -56), Math.toRadians(180)).component1(), Math.toRadians(-90))
-                .afterTime(0, intake.autonIntakeStop())
+                .afterTime(0, intake.autoIntakeStop())
                 .setReversed(true)
                 .splineToLinearHeading(new Pose2d(new Vector2d(-2.3, -0), Math.toRadians(50)), Math.toRadians(10))
-                //lauch and sort
-                .afterTime(0.5, launcher.autonSpinUp())
+                //launch and sort
+                .afterTime(0.5, launcher.autoBigSpinUp())
                 .afterTime(1, chamber.autoLaunch())
-                .afterTime(0, launcher.autonSpinDown())
+                .afterTime(0, launcher.autoSpinDown())
                 .splineToLinearHeading(new Pose2d(new Vector2d(35, -15), Math.toRadians(270)), Math.toRadians(-90))
                 ;
 //        TrajectoryActionBuilder flipped = new TrajectoryActionBuilder(build,
@@ -94,16 +94,9 @@ public class autoBlueBig extends LinearOpMode {
         waitForStart();
 
         Actions.runBlocking(new ParallelAction(
-                launcher.autonListen(),
-                launcher.autonSpinUp(),
-                launcher.autonSpinDown(),
+                launcher.autoListen(),
                 chamber.autoListen(),
-                chamber.autoCycle(),
-                chamber.autoCycleTwice(),
-                chamber.autoLaunch(),
-                intake.autonListen(),
-                intake.autonIntakeStop(),
-                intake.autonIntakeStart(),
+                intake.autoListen(),
                 build.build()
         ));
 
