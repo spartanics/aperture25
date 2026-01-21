@@ -28,9 +28,14 @@ public class Chamber {
     private Servo spin2;
     private Servo spin3;
 
+    private Servo rgb;
+
     double originalPos;
     double rotAmount;
     double targetPos;
+
+    public boolean launchReady = false;
+    public boolean intakeRun = false;
 
     double deltaTicks = 0.0;
     double deltaTarget = 0.0;
@@ -59,7 +64,7 @@ public class Chamber {
 
         spin3 = myOpMode.hardwareMap.get(Servo.class, "spin3");
 
-
+        rgb = myOpMode.hardwareMap.get(Servo.class, "rgb");
     }
 
     public void listen() {
@@ -118,19 +123,27 @@ public class Chamber {
             }
         }
 
-        if (myOpMode.gamepad2.y) {
+        if (myOpMode.gamepad2.y || launchReady) {
             swapCD.reset();
             if (target == 0) {
-                spin3.setPosition(0.4);
+                spin3.setPosition(0.3);
             } else if (target == 1) {
-                spin2.setPosition(0.4);
+                spin2.setPosition(0.3);
             } else if (target == 2) {
-                spin1.setPosition(0.4);
+                spin1.setPosition(0.3);
             }
-        } else {
+        }
+
+        if (swapCD.seconds() > 0.35) {
             spin1.setPosition(0);
             spin2.setPosition(0);
             spin3.setPosition(0);
+        }
+
+        if (intakeRun) {
+            rgb.setPosition(1);
+        } else {
+            rgb.setPosition(0);
         }
 
         spinPidf.setPIDF(HardwareConstants.kP, HardwareConstants.kI, HardwareConstants.kD, HardwareConstants.kF);
@@ -160,7 +173,7 @@ public class Chamber {
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             spindex.setPower(spinPidf.calculate(spindex.getCurrentPosition(), targetPos));
 
-            if (swapCD.seconds() > 0.2) {
+            if (swapCD.seconds() > 0.35) {
                 spin1.setPosition(0);
                 spin2.setPosition(0);
                 spin3.setPosition(0);

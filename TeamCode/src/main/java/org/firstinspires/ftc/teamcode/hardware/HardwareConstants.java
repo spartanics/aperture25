@@ -4,9 +4,10 @@ import com.acmerobotics.dashboard.config.Config;
 
 @Config
 public class HardwareConstants {
-    public static double HIGH_LAUNCH_POWER = 1;
-    public static double LOW_LAUNCH_POWER = 0.9;
+    public static double HIGH_LAUNCH_POWER = 3;
+    public static double LOW_LAUNCH_POWER = 0.5;
     public static double LAUNCH_LINE = 0.6;
+    public static double RGB_CONSTANT = 1;
 
     // SPINDEXER PIDF
     public static double kP = 0.006;

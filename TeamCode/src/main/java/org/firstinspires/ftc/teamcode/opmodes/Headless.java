@@ -119,6 +119,9 @@ public class Headless extends OpMode {
 
         }
 
+        chamber.launchReady = launcher.launchReady;
+        chamber.intakeRun = intake.intakeRun;
+
         intake.listen();
         chamber.listen();
         launcher.listen(drive.localizer.getPose());

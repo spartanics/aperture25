@@ -16,17 +16,45 @@ public class MeepMeepBlueSmall {
                 .build();
 //launch from big triangle if possible
         myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(58, -12, Math.toRadians(20)))
-                .waitSeconds(2)
                 .setReversed(true)
-                .splineToLinearHeading(new Pose2d(new Vector2d(35, -27), Math.toRadians(270)), Math.toRadians(-90))
-                .splineToConstantHeading(new Pose2d(new Vector2d(35, -58), Math.toRadians(180)).component1(), Math.toRadians(-90))
+                .splineToLinearHeading(new Pose2d(new Vector2d(-10, -5), Math.PI / 4), Math.PI)
+//                .afterTime(0, launcher.autoSmallSpinUp())
+//                .waitSeconds(2)
+//                .afterTime(0, chamber.autoLaunch())
+//                .waitSeconds(1)
+//                .afterTime(0, chamber.autoCycle())
+//                .waitSeconds(1)
+//                .afterTime(0, launcher.autoSpinDown())
+//                .waitSeconds(5)
+                .setReversed(false)
+                .splineToLinearHeading(new Pose2d(new Vector2d(36, -27), Math.toRadians(270)), Math.toRadians(-90))
+                // intake mechs
+//                .afterTime(0, intake.autoIntakeStart())
+                .splineToConstantHeading(new Pose2d(new Vector2d(36, -58), Math.toRadians(180)).component1(), Math.toRadians(-90))
+//                .afterTime(0, intake.autoIntakeStop())
+                // sorting mechs
                 .setReversed(true)
-                .splineToLinearHeading(new Pose2d(new Vector2d(58, -7.5), Math.toRadians(30)), Math.toRadians(60))
+                .splineToLinearHeading(new Pose2d(new Vector2d(-10, -5), Math.PI / 4), Math.PI)
+                // launch mech
+//                .afterTime(0, launcher.autoSmallSpinUp())
+//                .waitSeconds(0.5)
+//                .afterTime(0, chamber.autoLaunch())
+//                .waitSeconds(1)
+//                .afterTime(0, launcher.autoSpinDown())
+//                .waitSeconds(0.2)
                 .setReversed(true)
-                .splineToLinearHeading(new Pose2d(new Vector2d(10, -27), Math.toRadians(270)), Math.toRadians(-90))
-                .splineToConstantHeading(new Pose2d(new Vector2d(10, -58), Math.toRadians(180)).component1(), Math.toRadians(-90))
+                .splineToLinearHeading(new Pose2d(new Vector2d(11, -27), Math.toRadians(270)), Math.toRadians(-90))
+//                intake mech
+//                .afterTime(0, intake.autoIntakeStart())
+                .splineToConstantHeading(new Pose2d(new Vector2d(11, -58), Math.toRadians(180)).component1(), Math.toRadians(-90))
+//                .afterTime(0, intake.autoIntakeStop())
+//                sorting mech
                 .setReversed(true)
-                .splineToLinearHeading(new Pose2d(new Vector2d(58, -7.5), Math.toRadians(30)), Math.toRadians(60))
+                .splineToLinearHeading(new Pose2d(new Vector2d(-10, -5), Math.PI / 4), Math.PI)
+                //launching mech
+//                .afterTime(0.5, launcher.autoSmallSpinUp())
+//                .afterTime(1, chamber.autoLaunch())
+//                .afterTime(0.2, launcher.autoSpinDown())
                 .setReversed(true)
                 .splineToLinearHeading(new Pose2d(new Vector2d(-11, -30), Math.toRadians(270)), Math.toRadians(-90))
                 .build());
