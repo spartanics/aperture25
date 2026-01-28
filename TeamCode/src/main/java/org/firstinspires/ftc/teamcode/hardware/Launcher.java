@@ -71,6 +71,7 @@ public class Launcher {
         otherMater.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         flywheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        otherMater.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
     }
 
 
@@ -121,8 +122,10 @@ public class Launcher {
 
         if (myOpMode.gamepad2.right_bumper) {
             flywheel.setVelocity(adjustedVelocity, AngleUnit.RADIANS);
+            otherMater.setVelocity(adjustedVelocity,AngleUnit.RADIANS);
         } else {
             flywheel.setVelocity(0.0);
+            otherMater.setVelocity(0.0);
         }
 
         if (myOpMode.gamepad2.right_bumper && flywheel.getVelocity(AngleUnit.RADIANS) > adjustedVelocity - 0.1) {
@@ -139,7 +142,7 @@ public class Launcher {
 //        myOpMode.telemetry.addData("Timer", rpmtimer.seconds());
 //        myOpMode.telemetry.addData("RPM", "%.2f", rpm);
         myOpMode.telemetry.addData("Current", "%.2f", flywheel.getCurrent(CurrentUnit.AMPS));
-        myOpMode.telemetry.addData("Current", "%.2f", otherMater.getCurrent(CurrentUnit.AMPS));
+        myOpMode.telemetry.addData("Power Current", "%.2f", otherMater.getCurrent(CurrentUnit.AMPS));
         myOpMode.telemetry.addData("Linear Pos", "%.2f", linear.getPosition());
         myOpMode.telemetry.addLine();
 //        myOpMode.telemetry.addData("Delta Distance", "%.2f", ddistance);
@@ -152,9 +155,11 @@ public class Launcher {
             myOpMode.telemetry.addLine("----LAUNCHER----");
             myOpMode.telemetry.addData("Power", "%.2f", adjustedVelocity);
             myOpMode.telemetry.addData("Raw Velocity", "%.2f", flywheel.getVelocity(AngleUnit.RADIANS));
+            myOpMode.telemetry.addData("Raw Velocity", "%.2f", otherMater.getVelocity(AngleUnit.RADIANS));
 //        myOpMode.telemetry.addData("Timer", rpmtimer.seconds());
 //        myOpMode.telemetry.addData("RPM", "%.2f", rpm);
             myOpMode.telemetry.addData("Current", "%.2f", flywheel.getCurrent(CurrentUnit.AMPS));
+            myOpMode.telemetry.addData("Power Current", "%.2f", otherMater.getCurrent(CurrentUnit.AMPS));
             myOpMode.telemetry.addData("Linear Pos", "%.2f", linear.getPosition());
             myOpMode.telemetry.addLine();
             return true;
@@ -170,6 +175,7 @@ public class Launcher {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             flywheel.setVelocity(velocity, AngleUnit.RADIANS);
+            otherMater.setVelocity(velocity, AngleUnit.RADIANS);
             return true;
         }
     }
