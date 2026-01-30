@@ -229,12 +229,14 @@ public class Chamber {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             swapCD.reset();
-            if (target == 0) {
-                spin3.setPosition(0.4);
-            } else if (target == 1) {
-                spin2.setPosition(0.4);
-            } else if (target == 2) {
-                spin1.setPosition(0.4);
+            if (launchReady) {
+                if (target == 0) {
+                    spin3.setPosition(0.4);
+                } else if (target == 1) {
+                    spin2.setPosition(0.4);
+                } else if (target == 2) {
+                    spin1.setPosition(0.4);
+                }
             }
             return false;
         }
