@@ -22,7 +22,7 @@ import org.slf4j.MarkerFactory;
 
 
 @Config
-@Autonomous(name = "Auto Red Base", group = "Autonomous")
+@Autonomous(name = "Auto Red Small", group = "Autonomous")
 public class autoRedSmall extends LinearOpMode {
     Pose2d startPose;
     MecanumDrive drive;
@@ -43,34 +43,34 @@ public class autoRedSmall extends LinearOpMode {
                 .setReversed(true)
                 .splineToLinearHeading(new Pose2d(new Vector2d(-13, 15),  -7 * Math.PI / 32), Math.PI)
                 .afterTime(0, launcher.autoSmallSpinUp())
-                .waitSeconds(3.5)
+                .waitSeconds(3)
                 .afterTime(0, chamber.autoLaunch())
                 .waitSeconds(0.45)
                 .afterTime(0, chamber.autoCycle())
-                .waitSeconds(1.25)
+                .waitSeconds(1)
                 .afterTime(0, chamber.autoLaunch())
                 .waitSeconds(0.45)
                 .afterTime(0, chamber.autoCycle())
-                .waitSeconds(1.2)
+                .waitSeconds(1)
                 .afterTime(0, chamber.autoLaunch())
                 .waitSeconds(0.45)
                 .afterTime(0, launcher.autoSpinDown())
                 .setReversed(false)
-                .splineToLinearHeading(new Pose2d(new Vector2d(30, 38), Math.toRadians(-270)), Math.toRadians(90))
+                .splineToLinearHeading(new Pose2d(new Vector2d(30, 37), Math.toRadians(-270)), Math.toRadians(90))
                 // intake mechs
                 .afterTime(0, intake.autoIntakeStart())
                 .waitSeconds(0.2)
                 .afterTime(0, intake.autoIntakeStop())
-                .waitSeconds(0.2)
-                .splineToConstantHeading(new Pose2d(new Vector2d(30, 42), Math.toRadians(180)).component1(), Math.toRadians(90))
-                .waitSeconds(0.2)
-                .afterTime(0, chamber.autoCycle())
-                .waitSeconds(0.2)
-                .afterTime(0, intake.autoIntakeStart())
+                .waitSeconds(0.3)
                 .splineToConstantHeading(new Pose2d(new Vector2d(30, 44), Math.toRadians(180)).component1(), Math.toRadians(90))
+                .waitSeconds(0.3)
+                .afterTime(0, chamber.autoCycle())
+                .waitSeconds(0.3)
+                .afterTime(0, intake.autoIntakeStart())
+                .splineToConstantHeading(new Pose2d(new Vector2d(30, 46), Math.toRadians(180)).component1(), Math.toRadians(90))
                 .waitSeconds(0.5)
                 .afterTime(0, chamber.autoCycle())
-                .splineToConstantHeading(new Pose2d(new Vector2d(30, 47), Math.toRadians(180)).component1(), Math.toRadians(90))
+                .splineToConstantHeading(new Pose2d(new Vector2d(30, 48), Math.toRadians(180)).component1(), Math.toRadians(90))
                 .afterTime(0, intake.autoIntakeStop())
                 // sorting mechs
 //                .setReversed(true)
@@ -110,7 +110,7 @@ public class autoRedSmall extends LinearOpMode {
 
 
 
-
+// to add: move intake foward, after intake; move somemore
 
         launcher.init();
         chamber.init();

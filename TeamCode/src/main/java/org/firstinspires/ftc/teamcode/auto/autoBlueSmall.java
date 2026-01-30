@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.hardware.Launcher;
 
 
 @Config
-@Autonomous(name = "Auto Blue Base", group = "Autonomous")
+@Autonomous(name = "Auto Blue Small", group = "Autonomous")
 public class autoBlueSmall extends LinearOpMode {
     Pose2d startPose;
     MecanumDrive drive;
