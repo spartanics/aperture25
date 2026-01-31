@@ -189,17 +189,17 @@ public class Launcher {
         return new Launcher.AutonBigSpinUp();
     }
 
-    public class AutonSmallSpinUp implements Action {
+    public class AutonSpinUp implements Action {
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            velocity = 2.8;
+            velocity = 3;
             return false;
         }
     }
 
-    public Action autoSmallSpinUp() {
-        return new Launcher.AutonSmallSpinUp();
+    public Action autoSpinUp() {
+        return new Launcher.AutonSpinUp();
     }
 
     public class AutonSpinDown implements Action {

@@ -37,7 +37,7 @@ public class autoBlueSmall extends LinearOpMode {
                 // launch & sort mechs
                 .setReversed(true)
                 .splineToLinearHeading(new Pose2d(new Vector2d(-13, -15),  7 * Math.PI / 32), Math.PI)
-                .afterTime(0, launcher.autoSmallSpinUp())
+                .afterTime(0, launcher.autoSpinUp())
                 .waitSeconds(3.5)
                 .afterTime(0, chamber.autoLaunch())
                 .waitSeconds(0.45)
