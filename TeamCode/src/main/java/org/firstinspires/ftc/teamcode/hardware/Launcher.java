@@ -94,16 +94,16 @@ public class Launcher {
 
         if (myOpMode.gamepad1.dpad_right) {
             adjustedVelocity = HardwareConstants.HIGH_LAUNCH_POWER;
-            adjustedLinear = HardwareConstants.LAUNCH_LINE;
+            adjustedLinear = 0.9;
         } else if (myOpMode.gamepad1.dpad_down) {
             adjustedVelocity = 2.8;
-            adjustedLinear = 0.55;
+            adjustedLinear = 0.9;
         } else if (myOpMode.gamepad1.dpad_left) {
             adjustedVelocity = 2.6;
-            adjustedLinear = 0.55;
+            adjustedLinear = 0.9;
         } else if (myOpMode.gamepad1.dpad_up) {
             adjustedVelocity = 3.2;
-            adjustedLinear = HardwareConstants.LAUNCH_LINE;
+            adjustedLinear = 0.9;
         }
 
         linear.setPosition(adjustedLinear);
@@ -166,6 +166,12 @@ public class Launcher {
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             flywheel.setVelocity(velocity, AngleUnit.RADIANS);
             powerwheel.setVelocity(velocity, AngleUnit.RADIANS);
+
+            if (flywheel.getVelocity(AngleUnit.RADIANS) > adjustedVelocity - 0.2) {
+                Singleton.launchReady2 = true;
+            } else {
+                Singleton.launchReady2 = false;
+            }
             return true;
         }
     }
@@ -174,20 +180,20 @@ public class Launcher {
         return new Launcher.AutonListen();
     }
 
-    public class AutonBigSpinUp implements Action {
-
-        @Override
-        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            velocity = 0.5;
-            flywheel.setPower(0.6);
-            powerwheel.setPower(0.6);
-            return false;
-        }
-    }
-
-    public Action autoBigSpinUp() {
-        return new Launcher.AutonBigSpinUp();
-    }
+//    public class AutonBigSpinUp implements Action {
+//
+//        @Override
+//        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+//            velocity = 0.5;
+//            flywheel.setPower(0.6);
+//            powerwheel.setPower(0.6);
+//            return false;
+//        }
+//    }
+//
+//    public Action autoBigSpinUp() {
+//        return new Launcher.AutonBigSpinUp();
+//    }
 
     public class AutonSpinUp implements Action {
 

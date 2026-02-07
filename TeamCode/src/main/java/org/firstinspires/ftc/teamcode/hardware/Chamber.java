@@ -5,6 +5,9 @@ import androidx.annotation.NonNull;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.arcrobotics.ftclib.controller.PIDFController;
+import com.qualcomm.hardware.limelightvision.LLResult;
+import com.qualcomm.hardware.limelightvision.LLResultTypes;
+import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -30,6 +33,8 @@ public class Chamber {
 
     private Servo rgb;
 
+    private Limelight3A limelight;
+
     double originalPos;
     double rotAmount;
     double targetPos;
@@ -44,6 +49,10 @@ public class Chamber {
 
     private int spinPos;
     double target = 0;
+
+    private int motif;
+    private LLResult result;
+    private boolean[] artifacts = new boolean[]{true, false, false};; // true = green, false = purple
 
     public Chamber(OpMode opmode) { myOpMode = opmode; }
 
@@ -65,6 +74,14 @@ public class Chamber {
         spin3 = myOpMode.hardwareMap.get(Servo.class, "spin3");
 
         rgb = myOpMode.hardwareMap.get(Servo.class, "rgb");
+
+        limelight = myOpMode.hardwareMap.get(Limelight3A.class, "limelight");
+
+        limelight.pipelineSwitch(0);
+
+        limelight.start();
+
+        artifacts = new boolean[]{true, false, false};
     }
 
     public void listen() {
@@ -165,13 +182,49 @@ public class Chamber {
         myOpMode.telemetry.addLine();
     }
 
+    public int limelisten() {
+        result = limelight.getLatestResult();
 
+        if (result.isValid()) {
+            for (LLResultTypes.FiducialResult fr : result.getFiducialResults()) {
+                switch (fr.getFiducialId()) {
+                    case 21:
+                        motif = 0;
+                        break;
+                    case 22:
+                        motif = 1;
+                        break;
+                    case 23:
+                        motif = 2;
+                        break;
+                }
+            }
+        }
+
+        myOpMode.telemetry.addData("Motif:", motif);
+        myOpMode.telemetry.update();
+
+        return motif;
+    }
 
     public class AutonListen implements Action {
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             spindex.setPower(spinPidf.calculate(spindex.getCurrentPosition(), targetPos));
+
+            if (Singleton.launchReady1 && Singleton.launchReady2) {
+                if (target == 0) {
+                    spin3.setPosition(0.4);
+                    Singleton.launchReady1 = false;
+                } else if (target == 1) {
+                    spin2.setPosition(0.4);
+                    Singleton.launchReady1 = false;
+                } else if (target == 2) {
+                    spin1.setPosition(0.4);
+                    Singleton.launchReady1 = false;
+                }
+            }
 
             if (swapCD.seconds() > 0.35) {
                 spin1.setPosition(0);
@@ -224,21 +277,39 @@ public class Chamber {
         return new Chamber.AutonCycleTwice();
     }
 
+    public class AutonSort implements Action {
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            if (target == motif) {
+                return false;
+            } else if (target == motif - 1) {
+                target += 2;
+                targetPos += spinRadiansToTicks((4 * Math.PI) / 3);
+            } else if (target == motif - 2) {
+                target += 1;
+                targetPos += spinRadiansToTicks((2 * Math.PI) / 3);
+            } else if (target == motif + 1) {
+                target += 2;
+                targetPos += spinRadiansToTicks((4 * Math.PI) / 3);
+            } else if (target == motif + 2) {
+                target += 1;
+                targetPos += spinRadiansToTicks((2 * Math.PI) / 3);
+            }
+            return false;
+        }
+    }
+
+    public Action autoSort() {
+        return new Chamber.AutonSort();
+    }
+
     public class AutonLaunch implements Action {
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             swapCD.reset();
-            launchReady = true;
-            if (launchReady) {
-                if (target == 0) {
-                    spin3.setPosition(0.4);
-                } else if (target == 1) {
-                    spin2.setPosition(0.4);
-                } else if (target == 2) {
-                    spin1.setPosition(0.4);
-                }
-            }
+            Singleton.launchReady1 = true;
             return false;
         }
     }
@@ -246,5 +317,4 @@ public class Chamber {
     public Action autoLaunch() {
         return new Chamber.AutonLaunch();
     }
-//hello
 }

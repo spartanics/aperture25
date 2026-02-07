@@ -36,6 +36,7 @@ public class autoBlueSmall extends LinearOpMode {
                 .setReversed(true)
                 .splineToLinearHeading(new Pose2d(new Vector2d(-13, -15),  8 * Math.PI / 32), Math.PI)
                 .afterTime(0, launcher.autoSpinUp())
+                .afterTime(0, chamber.autoSort())
                 .waitSeconds(3)
                 .afterTime(0, chamber.autoLaunch())
                 .waitSeconds(0.45)
@@ -46,7 +47,7 @@ public class autoBlueSmall extends LinearOpMode {
                 .afterTime(0, chamber.autoCycle())
                 .waitSeconds(1)
                 .afterTime(0, chamber.autoLaunch())
-                .waitSeconds(0.45)
+                .waitSeconds(0.2)
                 .afterTime(0, launcher.autoSpinDown())
                 .waitSeconds(0.1)
 
@@ -73,6 +74,7 @@ public class autoBlueSmall extends LinearOpMode {
                 .splineToLinearHeading(new Pose2d(new Vector2d(-13, -15),  8 * Math.PI / 32), Math.PI)
 
                 .afterTime(0, launcher.autoSpinUp())
+                .afterTime(0, chamber.autoSort())
                 .waitSeconds(3)
                 .afterTime(0, chamber.autoLaunch())
                 .waitSeconds(0.45)
@@ -83,7 +85,7 @@ public class autoBlueSmall extends LinearOpMode {
                 .afterTime(0, chamber.autoCycle())
                 .waitSeconds(1)
                 .afterTime(0, chamber.autoLaunch())
-                .waitSeconds(0.45)
+                .waitSeconds(0.2)
                 .afterTime(0, launcher.autoSpinDown())
 
                 // leave to aline:
@@ -91,6 +93,7 @@ public class autoBlueSmall extends LinearOpMode {
 //testing in progress
 
                 ;
+
 
 
 //        TrajectoryActionBuilder flipped = new TrajectoryActionBuilder(build,
@@ -119,6 +122,9 @@ public class autoBlueSmall extends LinearOpMode {
         intake.init();
 
 
+        while (!isStarted()) {
+            chamber.limelisten();
+        }
 
 
         waitForStart();
@@ -129,11 +135,6 @@ public class autoBlueSmall extends LinearOpMode {
                 intake.autoListen(),
                 build.build()
         ));
-
-
-        launcher.sendTelemetry();
-        telemetry.update();
-
     }
 }
 

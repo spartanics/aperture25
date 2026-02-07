@@ -43,17 +43,18 @@ public class autoRedSmall extends LinearOpMode {
                 .setReversed(true)
                 .splineToLinearHeading(new Pose2d(new Vector2d(-13, 15),  -8 * Math.PI / 32), Math.PI)
                 .afterTime(0, launcher.autoSpinUp())
+                .afterTime(0, chamber.autoSort())
                 .waitSeconds(3)
                 .afterTime(0, chamber.autoLaunch())
                 .waitSeconds(0.45)
                 .afterTime(0, chamber.autoCycle())
-                .waitSeconds(1)
+                .waitSeconds(1.2)
                 .afterTime(0, chamber.autoLaunch())
                 .waitSeconds(0.45)
                 .afterTime(0, chamber.autoCycle())
                 .waitSeconds(1)
                 .afterTime(0, chamber.autoLaunch())
-                .waitSeconds(0.45)
+                .waitSeconds(0.2)
                 .afterTime(0, launcher.autoSpinDown())
                 .waitSeconds(0.1)
 
@@ -80,17 +81,18 @@ public class autoRedSmall extends LinearOpMode {
                 .splineToLinearHeading(new Pose2d(new Vector2d(-13, 15),  -8 * Math.PI / 32), Math.PI)
 
                 .afterTime(0, launcher.autoSpinUp())
+                .afterTime(0, chamber.autoSort())
                 .waitSeconds(3)
                 .afterTime(0, chamber.autoLaunch())
                 .waitSeconds(0.45)
                 .afterTime(0, chamber.autoCycle())
-                .waitSeconds(1)
+                .waitSeconds(1.2)
                 .afterTime(0, chamber.autoLaunch())
                 .waitSeconds(0.45)
                 .afterTime(0, chamber.autoCycle())
                 .waitSeconds(1)
                 .afterTime(0, chamber.autoLaunch())
-                .waitSeconds(0.45)
+                .waitSeconds(0.2)
                 .afterTime(0, launcher.autoSpinDown())
 
                 // leave to aline:
@@ -115,7 +117,9 @@ public class autoRedSmall extends LinearOpMode {
         chamber.init();
         intake.init();
 
-
+        while (!isStarted()) {
+            chamber.limelisten();
+        }
 
 
         waitForStart();

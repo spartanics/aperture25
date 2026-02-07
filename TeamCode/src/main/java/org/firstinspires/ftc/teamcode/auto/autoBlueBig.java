@@ -36,7 +36,7 @@ public class autoBlueBig extends LinearOpMode {
                 //scan
                 .splineToLinearHeading(new Pose2d(new Vector2d(-2.3, 0), Math.toRadians(50)), Math.toRadians(10))
                 //launch and sort
-                .afterTime(0.5, launcher.autoBigSpinUp())
+//                .afterTime(0.5, launcher.autoBigSpinUp())
                 .afterTime(1, chamber.autoLaunch())
                 .afterTime(0, launcher.autoSpinDown())
                 .splineToLinearHeading(new Pose2d(new Vector2d(-11, -30), Math.toRadians(270)), Math.toRadians(-90))
@@ -47,7 +47,7 @@ public class autoBlueBig extends LinearOpMode {
                 .setReversed(true)
                 .splineToLinearHeading(new Pose2d(new Vector2d(-2.3, 0), Math.toRadians(50)), Math.toRadians(0))
                 //launch and sort
-                .afterTime(0.5, launcher.autoBigSpinUp())
+//                .afterTime(0.5, launcher.autoBigSpinUp())
                 .afterTime(1, chamber.autoLaunch())
                 .afterTime(0, launcher.autoSpinDown())
                 .splineToLinearHeading(new Pose2d(new Vector2d(11, -27), Math.toRadians(270)), Math.toRadians(-90))
@@ -58,7 +58,7 @@ public class autoBlueBig extends LinearOpMode {
                 .setReversed(true)
                 .splineToLinearHeading(new Pose2d(new Vector2d(-2.3, -0), Math.toRadians(50)), Math.toRadians(10))
                 //launch and sort
-                .afterTime(0.5, launcher.autoBigSpinUp())
+//                .afterTime(0.5, launcher.autoBigSpinUp())
                 .afterTime(1, chamber.autoLaunch())
                 .afterTime(0, launcher.autoSpinDown())
                 .splineToLinearHeading(new Pose2d(new Vector2d(35, -15), Math.toRadians(270)), Math.toRadians(-90))
