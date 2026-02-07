@@ -33,65 +33,62 @@ public class autoBlueSmall extends LinearOpMode {
         startPose = new Pose2d(58, -12, Math.toRadians(0));
         drive = new MecanumDrive(hardwareMap, startPose);
         TrajectoryActionBuilder build = drive.actionBuilder(startPose)
-                // scan
-                // launch & sort mechs
                 .setReversed(true)
-                .splineToLinearHeading(new Pose2d(new Vector2d(-13, -15),  7 * Math.PI / 32), Math.PI)
+                .splineToLinearHeading(new Pose2d(new Vector2d(-13, -15),  8 * Math.PI / 32), Math.PI)
                 .afterTime(0, launcher.autoSpinUp())
-                .waitSeconds(3.5)
+                .waitSeconds(3)
                 .afterTime(0, chamber.autoLaunch())
                 .waitSeconds(0.45)
                 .afterTime(0, chamber.autoCycle())
-                .waitSeconds(1.25)
+                .waitSeconds(1)
                 .afterTime(0, chamber.autoLaunch())
                 .waitSeconds(0.45)
                 .afterTime(0, chamber.autoCycle())
-                .waitSeconds(1.2)
+                .waitSeconds(1)
                 .afterTime(0, chamber.autoLaunch())
                 .waitSeconds(0.45)
                 .afterTime(0, launcher.autoSpinDown())
+                .waitSeconds(0.1)
+
+                //intake sequence
+                .afterTime(0, intake.autoIntakeStart())
                 .setReversed(false)
-                .splineToLinearHeading(new Pose2d(new Vector2d(30, -38), Math.toRadians(270)), Math.toRadians(-90))
+                .splineToLinearHeading(new Pose2d(new Vector2d(30, -37), Math.toRadians(270)), Math.toRadians(-90))
                 // intake mechs
-                .afterTime(0, intake.autoIntakeStart())
-                .waitSeconds(0.2)
-                .afterTime(0, intake.autoIntakeStop())
-                .waitSeconds(0.2)
-                .splineToConstantHeading(new Pose2d(new Vector2d(30, -42), Math.toRadians(180)).component1(), Math.toRadians(-90))
-                .waitSeconds(0.2)
-                .afterTime(0, chamber.autoCycle())
-                .waitSeconds(0.2)
-                .afterTime(0, intake.autoIntakeStart())
-                .splineToConstantHeading(new Pose2d(new Vector2d(30, -44), Math.toRadians(180)).component1(), Math.toRadians(-90))
+//intake
                 .waitSeconds(0.5)
+                .splineToConstantHeading(new Pose2d(new Vector2d(30, -42), Math.toRadians(-180)).component1(), Math.toRadians(-90))
+                .waitSeconds(0.9) //0.3
                 .afterTime(0, chamber.autoCycle())
-                .splineToConstantHeading(new Pose2d(new Vector2d(30, -47), Math.toRadians(180)).component1(), Math.toRadians(-90))
+                .waitSeconds(0.8) //0.3
+                .splineToConstantHeading(new Pose2d(new Vector2d(30, -45), Math.toRadians(-180)).component1(), Math.toRadians(-90))
+                .waitSeconds(0.9)
+                .afterTime(0, chamber.autoCycle())
+                .waitSeconds(0.8) //0.2
+                .splineToConstantHeading(new Pose2d(new Vector2d(30, -49), Math.toRadians(-180)).component1(), Math.toRadians(-90))
+                .waitSeconds(0.2)
                 .afterTime(0, intake.autoIntakeStop())
-                // sorting mechs
-//                .setReversed(true)
-//                .splineToLinearHeading(new Pose2d(new Vector2d(-10, -5), Math.PI / 4), Math.PI)
-                // launch mech
-//                .afterTime(0, launcher.autoSmallSpinUp())
-//                .waitSeconds(0.5)
-//                .afterTime(0, chamber.autoLaunch())
-//                .waitSeconds(1)
-//                .afterTime(0, launcher.autoSpinDown())
-//                .waitSeconds(0.2)
-//                .setReversed(true)
-//                .splineToLinearHeading(new Pose2d(new Vector2d(11, -27), Math.toRadians(270)), Math.toRadians(-90))
-//                intake mech
-//                .afterTime(0, intake.autoIntakeStart())
-//                .splineToConstantHeading(new Pose2d(new Vector2d(11, -58), Math.toRadians(180)).component1(), Math.toRadians(-90))
-//                .afterTime(0, intake.autoIntakeStop())
-//                sorting mech
-//                .setReversed(true)
-//                .splineToLinearHeading(new Pose2d(new Vector2d(-10, -5), Math.PI / 4), Math.PI)
-                //launching mech
-//                .afterTime(0.5, launcher.autoSmallSpinUp())
-//                .afterTime(1, chamber.autoLaunch())
-//                .afterTime(0.2, launcher.autoSpinDown())
-//                .setReversed(true)
-//                .splineToLinearHeading(new Pose2d(new Vector2d(-11, -30), Math.toRadians(270)), Math.toRadians(-90))
+                //launch 2
+                .setReversed(true)
+                .splineToLinearHeading(new Pose2d(new Vector2d(-13, -15),  8 * Math.PI / 32), Math.PI)
+
+                .afterTime(0, launcher.autoSpinUp())
+                .waitSeconds(3)
+                .afterTime(0, chamber.autoLaunch())
+                .waitSeconds(0.45)
+                .afterTime(0, chamber.autoCycle())
+                .waitSeconds(1)
+                .afterTime(0, chamber.autoLaunch())
+                .waitSeconds(0.45)
+                .afterTime(0, chamber.autoCycle())
+                .waitSeconds(1)
+                .afterTime(0, chamber.autoLaunch())
+                .waitSeconds(0.45)
+                .afterTime(0, launcher.autoSpinDown())
+
+                // leave to aline:
+                .splineToLinearHeading(new Pose2d(new Vector2d(9, -34), Math.toRadians(270)), Math.toRadians(-90))
+//testing in progress
 
                 ;
 
