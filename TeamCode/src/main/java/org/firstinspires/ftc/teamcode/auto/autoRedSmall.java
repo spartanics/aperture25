@@ -18,6 +18,7 @@ import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.hardware.Chamber;
 import org.firstinspires.ftc.teamcode.hardware.Intake;
 import org.firstinspires.ftc.teamcode.hardware.Launcher;
+import org.firstinspires.ftc.teamcode.hardware.Singleton;
 import org.slf4j.MarkerFactory;
 
 
@@ -25,7 +26,6 @@ import org.slf4j.MarkerFactory;
 @Autonomous(name = "Auto Red Small", group = "Autonomous")
 public class autoRedSmall extends LinearOpMode {
     Pose2d startPose;
-    MecanumDrive drive;
 
     Chamber chamber = new Chamber(this);
     Launcher launcher = new Launcher(this);
@@ -36,8 +36,8 @@ public class autoRedSmall extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         startPose = new Pose2d(58, 12, Math.toRadians(0));
-        drive = new MecanumDrive(hardwareMap, startPose);
-        TrajectoryActionBuilder build = drive.actionBuilder(startPose)
+        Singleton.drive = new MecanumDrive(hardwareMap, startPose);
+        TrajectoryActionBuilder build = Singleton.drive.actionBuilder(startPose)
                 // scan
                 // launch & sort mechs
                 .setReversed(true)

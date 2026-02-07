@@ -48,6 +48,7 @@ public class Tank extends OpMode {
 
         intake.init();
         chamber.init();
+        chamber.syncTarget();
         launcher.init();
         speed = 1;
     }

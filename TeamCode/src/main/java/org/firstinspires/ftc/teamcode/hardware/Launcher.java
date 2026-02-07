@@ -118,7 +118,7 @@ public class Launcher {
             powerwheel.setVelocity(0.0);
         }
 
-        if (myOpMode.gamepad2.right_bumper && flywheel.getVelocity(AngleUnit.RADIANS) > adjustedVelocity - 0.1) {
+        if (myOpMode.gamepad2.right_bumper && flywheel.getVelocity(AngleUnit.RADIANS) > adjustedVelocity - 0.2) {
             launchReady = true;
         } else {
             launchReady = false;

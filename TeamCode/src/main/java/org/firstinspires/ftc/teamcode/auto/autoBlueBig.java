@@ -13,13 +13,13 @@ import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.hardware.Chamber;
 import org.firstinspires.ftc.teamcode.hardware.Intake;
 import org.firstinspires.ftc.teamcode.hardware.Launcher;
+import org.firstinspires.ftc.teamcode.hardware.Singleton;
 
 
 @Config
 @Autonomous(name = "Auto Blue Goal", group = "Autonomous")
 public class autoBlueBig extends LinearOpMode {
     Pose2d startPose;
-    MecanumDrive drive;
 
     Chamber chamber = new Chamber(this);
     Launcher launcher = new Launcher(this);
@@ -30,8 +30,8 @@ public class autoBlueBig extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         startPose = new Pose2d(-54, -47, Math.toRadians(55));
-        drive = new MecanumDrive(hardwareMap, startPose);
-        TrajectoryActionBuilder build = drive.actionBuilder(startPose)
+        Singleton.drive = new MecanumDrive(hardwareMap, startPose);
+        TrajectoryActionBuilder build = Singleton.drive.actionBuilder(startPose)
                 .splineToLinearHeading(new Pose2d(new Vector2d(-23, -0), Math.toRadians(0)), Math.toRadians(90))
                 //scan
                 .splineToLinearHeading(new Pose2d(new Vector2d(-2.3, 0), Math.toRadians(50)), Math.toRadians(10))

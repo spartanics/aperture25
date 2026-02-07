@@ -14,13 +14,13 @@ import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.hardware.Chamber;
 import org.firstinspires.ftc.teamcode.hardware.Intake;
 import org.firstinspires.ftc.teamcode.hardware.Launcher;
+import org.firstinspires.ftc.teamcode.hardware.Singleton;
 
 
 @Config
 @Autonomous(name = "Auto Blue Small", group = "Autonomous")
 public class autoBlueSmall extends LinearOpMode {
     Pose2d startPose;
-    MecanumDrive drive;
 
     Chamber chamber = new Chamber(this);
     Launcher launcher = new Launcher(this);
@@ -31,8 +31,8 @@ public class autoBlueSmall extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         startPose = new Pose2d(58, -12, Math.toRadians(0));
-        drive = new MecanumDrive(hardwareMap, startPose);
-        TrajectoryActionBuilder build = drive.actionBuilder(startPose)
+        Singleton.drive = new MecanumDrive(hardwareMap, startPose);
+        TrajectoryActionBuilder build = Singleton.drive.actionBuilder(startPose)
                 .setReversed(true)
                 .splineToLinearHeading(new Pose2d(new Vector2d(-13, -15),  8 * Math.PI / 32), Math.PI)
                 .afterTime(0, launcher.autoSpinUp())

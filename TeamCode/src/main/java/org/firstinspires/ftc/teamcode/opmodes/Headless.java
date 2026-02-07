@@ -10,6 +10,7 @@ import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.hardware.Chamber;
 import org.firstinspires.ftc.teamcode.hardware.Intake;
 import org.firstinspires.ftc.teamcode.hardware.Launcher;
+import org.firstinspires.ftc.teamcode.hardware.Singleton;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -57,10 +58,11 @@ public class Headless extends OpMode {
 
         intake.init();
         chamber.init();
+        chamber.syncTarget();
         launcher.init();
 
 
-        drive = new MecanumDrive(hardwareMap, new Pose2d(60, 60, Math.toRadians(270)));
+        drive = new MecanumDrive(hardwareMap, Singleton.storedpose);
         headlessHeading = 0;
 
         pressed_a = false;

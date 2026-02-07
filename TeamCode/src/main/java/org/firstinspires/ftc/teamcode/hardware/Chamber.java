@@ -48,7 +48,7 @@ public class Chamber {
     boolean stillOffset = false;
 
     private int spinPos;
-    double target = 0;
+    int target = 0;
 
     private int motif;
     private LLResult result;
@@ -82,6 +82,10 @@ public class Chamber {
         limelight.start();
 
         artifacts = new boolean[]{true, false, false};
+    }
+
+    public void syncTarget() {
+        target = Singleton.target;
     }
 
     public void listen() {
@@ -177,7 +181,7 @@ public class Chamber {
 //        myOpMode.telemetry.addData("Orig. Calc", "%.2f", originalPos);
 //        myOpMode.telemetry.addData("Amount Rotations", "%.2f", rotAmount);
         myOpMode.telemetry.addData("Target Point", "%.2f", targetPos);
-        myOpMode.telemetry.addData("Target", "%.2f", target);
+        myOpMode.telemetry.addData("Target", "%d", target);
         myOpMode.telemetry.addData("Delta Target", "%.2f", deltaTarget);
         myOpMode.telemetry.addLine();
     }
@@ -212,6 +216,8 @@ public class Chamber {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
             spindex.setPower(spinPidf.calculate(spindex.getCurrentPosition(), targetPos));
+            Singleton.target = target;
+            Singleton.storedpose = Singleton.drive.localizer.getPose();
 
             if (Singleton.launchReady1 && Singleton.launchReady2) {
                 if (target == 0) {
