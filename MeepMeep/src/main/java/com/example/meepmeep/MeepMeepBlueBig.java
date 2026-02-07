@@ -16,19 +16,26 @@ public class MeepMeepBlueBig {
                 .build();
 //launch is (-2.3, 0)
         myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(-54, -47, Math.toRadians(55)))
-                .waitSeconds(2)
-                .splineToLinearHeading(new Pose2d(new Vector2d(-23, -0), Math.toRadians(0)), Math.toRadians(90))
-                .splineToLinearHeading(new Pose2d(new Vector2d(-17, -10), Math.toRadians(50)), Math.toRadians(0))
-                .splineToLinearHeading(new Pose2d(new Vector2d(-11, -30), Math.toRadians(270)), Math.toRadians(-90))
-                .splineToConstantHeading(new Pose2d(new Vector2d(-11, -56), Math.toRadians(180)).component1(), Math.toRadians(-90))
-                        .setReversed(true)
-                .splineToLinearHeading(new Pose2d(new Vector2d(-17, -10), Math.toRadians(50)), Math.toRadians(0))
+                .splineToLinearHeading(new Pose2d(new Vector2d(-23, 0), Math.toRadians(0)), Math.toRadians(0))
+                //scan motif
+                .splineToLinearHeading(new Pose2d(new Vector2d(-2.3, 0), 8 * Math.PI / 32), Math.PI)
 
-                .splineToLinearHeading(new Pose2d(new Vector2d(11, -27), Math.toRadians(270)), Math.toRadians(-90))
-                .splineToConstantHeading(new Pose2d(new Vector2d(11, -56), Math.toRadians(180)).component1(), Math.toRadians(-90))
-                        .setReversed(true)
-                .splineToLinearHeading(new Pose2d(new Vector2d(-17, -10), Math.toRadians(50)), Math.toRadians(0))
-                .splineToLinearHeading(new Pose2d(new Vector2d(35, -27), Math.toRadians(270)), Math.toRadians(-90))
+
+
+                .splineToLinearHeading(new Pose2d(new Vector2d(-16, -33), Math.toRadians(270)), Math.toRadians(-90))
+
+                .splineToConstantHeading(new Pose2d(new Vector2d(-16, -41), Math.toRadians(-180)).component1(), Math.toRadians(-90))
+
+                .splineToConstantHeading(new Pose2d(new Vector2d(-16, -44), Math.toRadians(-180)).component1(), Math.toRadians(-90))
+
+                .splineToConstantHeading(new Pose2d(new Vector2d(-16, -48), Math.toRadians(-180)).component1(), Math.toRadians(-90))
+
+                //.
+                .setReversed(true)
+                .splineToLinearHeading(new Pose2d(new Vector2d(-2.3, 0), 8 * Math.PI / 32), Math.PI)
+                //launch
+
+                .splineToLinearHeading(new Pose2d(new Vector2d(9, -30), Math.toRadians(270)), Math.toRadians(-90))
                 .build());
 
         meepMeep.setBackground(MeepMeep.Background.FIELD_DECODE_JUICE_DARK)
