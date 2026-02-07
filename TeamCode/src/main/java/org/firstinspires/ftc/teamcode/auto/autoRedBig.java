@@ -31,34 +31,61 @@ public class autoRedBig extends LinearOpMode {
         startPose = new Pose2d(-54, 47, Math.toRadians(-55));
         drive = new MecanumDrive(hardwareMap, startPose);
         TrajectoryActionBuilder build = drive.actionBuilder(startPose)
-                .waitSeconds(2)
                 .splineToLinearHeading(new Pose2d(new Vector2d(-23, 0), Math.toRadians(0)), Math.toRadians(0))
-                .splineToLinearHeading(new Pose2d(new Vector2d(-2.3, 0), Math.toRadians(-50)), Math.toRadians(10))
-                .splineToLinearHeading(new Pose2d(new Vector2d(-11, 27), Math.toRadians(-270)), Math.toRadians(90))
-                .splineToConstantHeading(new Pose2d(new Vector2d(-11, 52), Math.toRadians(-180)).component1(), Math.toRadians(90))
+                //scan motif
+                .splineToLinearHeading(new Pose2d(new Vector2d(-13, 15), -8 * Math.PI / 32), Math.PI)
+                .afterTime(0, launcher.autoSpinUp())
+                .afterTime(0, chamber.autoSort())
+                .waitSeconds(3)
+                .afterTime(0, chamber.autoLaunch())
+                .waitSeconds(0.45)
+                .afterTime(0, chamber.autoCycle())
+                .waitSeconds(1)
+                .afterTime(0, chamber.autoLaunch())
+                .waitSeconds(0.45)
+                .afterTime(0, chamber.autoCycle())
+                .waitSeconds(1)
+                .afterTime(0, chamber.autoLaunch())
+                .waitSeconds(0.2)
+                .afterTime(0, launcher.autoSpinDown())
+                .waitSeconds(0.1)
+
+                .afterTime(0, intake.autoIntakeStart())
+                .splineToLinearHeading(new Pose2d(new Vector2d(-11, 33), Math.toRadians(-270)), Math.toRadians(90))
+                .waitSeconds(0.5)
+                .splineToConstantHeading(new Pose2d(new Vector2d(-11, 41), Math.toRadians(180)).component1(), Math.toRadians(90))
+                .waitSeconds(0.9) //0.3
+                .afterTime(0, chamber.autoCycle())
+                .waitSeconds(0.8) //0.3
+                .splineToConstantHeading(new Pose2d(new Vector2d(-11, 44), Math.toRadians(180)).component1(), Math.toRadians(90))
+                .waitSeconds(0.9)
+                .afterTime(0, chamber.autoCycle())
+                .waitSeconds(0.8) //0.2
+                .splineToConstantHeading(new Pose2d(new Vector2d(-11, 48), Math.toRadians(180)).component1(), Math.toRadians(90))
+                .waitSeconds(0.2)
+                .afterTime(0, intake.autoIntakeStop())
+                //.
                 .setReversed(true)
-                .splineToLinearHeading(new Pose2d(new Vector2d(-2.3, 0), Math.toRadians(-50)), Math.toRadians(10))
-                .splineToLinearHeading(new Pose2d(new Vector2d(12, 27), Math.toRadians(-270)), Math.toRadians(90))
-                .splineToConstantHeading(new Pose2d(new Vector2d(12, 52), Math.toRadians(-180)).component1(), Math.toRadians(90))
-                .setReversed(true)
-                .splineToLinearHeading(new Pose2d(new Vector2d(-2.3, 0), Math.toRadians(-50)), Math.toRadians(10))
-                .splineToLinearHeading(new Pose2d(new Vector2d(35, 15), Math.toRadians(-270)), Math.toRadians(0))
+                .splineToLinearHeading(new Pose2d(new Vector2d(-13, 15), -8 * Math.PI / 32), Math.PI)
+                //launch
+                .afterTime(0, launcher.autoSpinUp())
+                .afterTime(0, chamber.autoSort())
+                .waitSeconds(3)
+                .afterTime(0, chamber.autoLaunch())
+                .waitSeconds(0.45)
+                .afterTime(0, chamber.autoCycle())
+                .waitSeconds(1)
+                .afterTime(0, chamber.autoLaunch())
+                .waitSeconds(0.45)
+                .afterTime(0, chamber.autoCycle())
+                .waitSeconds(1)
+                .afterTime(0, chamber.autoLaunch())
+                .waitSeconds(0.2)
+                .afterTime(0, launcher.autoSpinDown())
+
+                // leave to aline:
+                .splineToLinearHeading(new Pose2d(new Vector2d(9, 30), Math.toRadians(-270)), Math.toRadians(90))
                 ;
-//        TrajectoryActionBuilder flipped = new TrajectoryActionBuilder(build,
-//                new TrajectoryBuilderParams(pose -> new Pose2dDual<>(
-//                        pose.position.x, pose.position.y.unaryMinus(), pose.heading.inverse()),
-//                1,
-//                lastPoseUnmapped: Pose2d,
-//                lastPose: Pose2d,
-//                lastTangent: Rotation2d,
-//                ms:List<MarkerFactory>,
-//        cont: (Action) -> Action);
-
-
-
-
-
-        //PoseStorage.storedPose = drive.pose;
 
 
 
@@ -67,6 +94,11 @@ public class autoRedBig extends LinearOpMode {
 
         launcher.init();
         chamber.init();
+        intake.init();
+
+        while (!isStarted()) {
+            chamber.limelisten();
+        }
 
 
 

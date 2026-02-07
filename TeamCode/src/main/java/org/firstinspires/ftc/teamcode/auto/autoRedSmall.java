@@ -130,11 +130,6 @@ public class autoRedSmall extends LinearOpMode {
                 intake.autoListen(),
                 build.build()
         ));
-
-
-        launcher.sendTelemetry();
-        telemetry.update();
-
     }
 }
 

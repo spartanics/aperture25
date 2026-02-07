@@ -16,19 +16,22 @@ public class MeepMeepRedSmall {
                 .build();
 
         myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(56, 10, Math.toRadians(-20)))
-                .waitSeconds(2)
                 .setReversed(true)
-                .splineToLinearHeading(new Pose2d(new Vector2d(36, 27), Math.toRadians(90)), Math.toRadians(90))
-                .splineToConstantHeading(new Pose2d(new Vector2d(36, 56), Math.toRadians(180)).component1(), Math.toRadians(-90))
+                .splineToLinearHeading(new Pose2d(new Vector2d(-13, 15),  -8 * Math.PI / 32), Math.PI)
+
+                .setReversed(false)
+                .splineToLinearHeading(new Pose2d(new Vector2d(30, 37), Math.toRadians(-270)), Math.toRadians(90))
+
+                .splineToConstantHeading(new Pose2d(new Vector2d(30, 42), Math.toRadians(180)).component1(), Math.toRadians(90))
+
+                .splineToConstantHeading(new Pose2d(new Vector2d(30, 45), Math.toRadians(180)).component1(), Math.toRadians(90))
+
+                .splineToConstantHeading(new Pose2d(new Vector2d(30, 49), Math.toRadians(180)).component1(), Math.toRadians(90))
+
                 .setReversed(true)
-                .splineToLinearHeading(new Pose2d(new Vector2d(56, 10), Math.toRadians(-20)), Math.toRadians(60))
-                .setReversed(true)
-                .splineToLinearHeading(new Pose2d(new Vector2d(12, 27), Math.toRadians(90)), Math.toRadians(90))
-                .splineToConstantHeading(new Pose2d(new Vector2d(12, 55), Math.toRadians(180)).component1(), Math.toRadians(-90))
-                .setReversed(true)
-                .splineToLinearHeading(new Pose2d(new Vector2d(56, 10), Math.toRadians(-20)), Math.toRadians(60))
-                .setReversed(true)
-                .splineToLinearHeading(new Pose2d(new Vector2d(-10, 30), Math.toRadians(90)), Math.toRadians(180))
+                .splineToLinearHeading(new Pose2d(new Vector2d(-13, 15),  -8 * Math.PI / 32), Math.PI)
+
+                .splineToLinearHeading(new Pose2d(new Vector2d(9, 34), Math.toRadians(-270)), Math.toRadians(90))
                 .build());
 
         meepMeep.setBackground(MeepMeep.Background.FIELD_DECODE_JUICE_DARK)
